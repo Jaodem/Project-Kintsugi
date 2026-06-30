@@ -4,7 +4,7 @@
 
 ## Objective
 
-Project Kintsugi aims to build a Linux desktop where every component has a purpose, every decision is documented, and very configuration is fully understood.
+Project Kintsugi aims to build a Linux desktop where every component has a purpose, every decision is documented, and every configuration is fully understood.
 
 The goal is not to create the most beautiful desktop.
 
