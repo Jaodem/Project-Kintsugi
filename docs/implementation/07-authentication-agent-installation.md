@@ -141,9 +141,9 @@ The following observations remain under evaluation but do not currently affect f
 * Hyprland reports that `hyprland-guiutils` is not installed.
 * Hyprland displays a warning indicating it was not started using `start-hyprland`, despite the session being managed by UWSM.
 * Some KDE-related user services remain present from the Plasma installation and may require future evaluation.
-* The Hyprland-specific XDG Desktop Portal backend (`xdg-desktop-portal-hyprland`) has not yet been evaluated.
 
-None of these observations currently affect graphical authentication or Secret Service functionality.
+The previously pending evaluation of `xdg-desktop-portal-hyprland` has been completed successfully and is no longer considered an outstanding issue.
+
 
 ---
 
