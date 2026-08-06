@@ -2,77 +2,102 @@
 
 ## Objective
 
-The purpose of this document is to select the XDG Desktop Portal backend that will become the standard implementation for Project Kintsugi.
+The purpose of this document is to select the XDG Desktop Portal backend architecture that will become the standard implementation for Project Kintsugi.
 
-The selected backend should integrate naturally with Hyprland while preserving the project's modular architecture and long-term maintainability.
+The selected solution should integrate naturally with Hyprland while preserving the project's modular architecture, compatibility with modern Wayland applications, and long-term maintainability.
 
 ---
 
 ## Background
 
-Project Kintsugi already included the generic portal service together with the KDE and GTK portal backends inherited from the Plasma installation.
+Project Kintsugi is built on Fedora using Hyprland as its Wayland compositor.
 
-Although functional, this configuration lacked the Hyprland-specific backend responsible for implementing native Wayland interfaces such as Screenshot, ScreenCast, GlobalShortcuts and InputCapture.
+The desktop portal infrastructure enables applications to interact with the graphical session through standardized D-Bus interfaces instead of compositor-specific implementations.
 
-The objective was therefore to evaluate whether the Hyprland backend should become part of the standard desktop architecture.
+Fedora already provides the generic portal service together with multiple backend implementations. The objective of this evaluation is to determine which backend architecture best aligns with Project Kintsugi's engineering principles.
 
 ---
 
 ## Evaluation Criteria
 
-The selected backend should satisfy the following requirements:
+The selected solution should satisfy the following requirements:
 
 * native Hyprland support;
-* compatibility with Wayland;
+* compatibility with modern Wayland applications;
 * active upstream maintenance;
 * availability through approved package sources;
-* predictable behavior;
-* minimal architectural complexity;
+* minimal configuration complexity;
+* modular architecture;
 * long-term maintainability.
+
+The objective is selecting a reliable desktop infrastructure rather than maximizing desktop-specific functionality.
 
 ---
 
-## Available Backends
+## Candidate Backends
 
 ### xdg-desktop-portal-hyprland
 
-Provides Hyprland-native implementations for:
+Provides Hyprland-native implementations for compositor-specific interfaces, including:
 
 * Screenshot
 * ScreenCast
 * GlobalShortcuts
 * InputCapture
 
-It is developed by the Hyprland project and integrates directly with compositor-specific Wayland protocols.
+It is developed as part of the Hyprland ecosystem and integrates directly with the compositor through Wayland protocols.
 
 ---
 
 ### xdg-desktop-portal-gtk
 
-Provides several generic portal implementations shared across multiple desktop environments.
+Provides generic desktop portal implementations shared across multiple desktop environments.
 
-It complements compositor-specific backends by implementing interfaces that are not provided by Hyprland itself.
+Typical responsibilities include:
+
+* FileChooser
+* AppChooser
+* Print
+* Notification
+* Settings
+* Access
+
+It complements compositor-specific backends by implementing interfaces outside the scope of Hyprland.
 
 ---
 
 ### xdg-desktop-portal-kde
 
-Provides a complete KDE implementation of the portal interfaces.
+Provides a comprehensive KDE implementation of the XDG Desktop Portal interfaces.
 
-Although installed as part of the Plasma environment, it is not the preferred backend for a native Hyprland session.
+While appropriate for Plasma sessions, its preferred desktop is KDE and it is not selected for native Hyprland sessions.
+
+The package may remain installed while Plasma is still present on the system.
 
 ---
 
 ## Fedora Evaluation
 
-Package validation confirmed that:
+Evaluation confirmed that Fedora provides the required portal infrastructure for a Hyprland session.
 
-* `xdg-desktop-portal` was already installed;
-* `xdg-desktop-portal-gtk` was already installed;
-* `xdg-desktop-portal-kde` was already installed;
-* `xdg-desktop-portal-hyprland` was available from the approved Hyprland COPR repository.
+The detected configuration consists of:
 
-The package introduced only the expected runtime dependencies together with the optional weak dependency `hyprpicker`.
+* `xdg-desktop-portal`
+* `xdg-desktop-portal-hyprland`
+* `xdg-desktop-portal-gtk`
+
+The system also includes `xdg-desktop-portal-kde` as part of the existing Plasma installation.
+
+Hyprland distributes the following portal preference configuration:
+
+```ini
+[preferred]
+default=hyprland;gtk
+```
+
+This configuration instructs the portal service to use the Hyprland backend whenever available while delegating unsupported interfaces to the GTK backend.
+
+No additional portal configuration was required.
 
 ---
 
@@ -84,29 +109,32 @@ Project Kintsugi adopts the following portal architecture:
 * `xdg-desktop-portal-hyprland`
 * `xdg-desktop-portal-gtk`
 
-The KDE backend may remain installed while Plasma is present, but it is no longer considered part of the target Hyprland architecture.
+This architecture follows Fedora's default Hyprland configuration and the upstream recommendations for modern Wayland environments.
+
+The KDE backend may remain installed while the Plasma desktop environment is present, but it is not considered part of the target Hyprland architecture.
 
 ---
 
 ## Validation
 
-The implementation was validated by confirming:
+The selected architecture was validated by confirming:
 
-* successful installation;
 * active `xdg-desktop-portal.service`;
 * active `xdg-desktop-portal-hyprland.service`;
+* active `xdg-desktop-portal-gtk.service`;
 * successful initialization of the Hyprland backend;
-* successful PipeWire connection;
-* successful screencopy initialization;
-* successful screenshot creation using `grim`;
-* successful execution of `hyprland-share-picker`.
+* successful screen sharing through the ScreenCast portal;
+* successful multi-monitor selection;
+* successful file selection through the FileChooser portal;
+* correct backend selection for the Hyprland session;
+* no functional issues observed during validation.
 
-These tests confirmed that the backend correctly integrates with the running Hyprland session.
+These tests confirmed that the selected portal architecture integrates correctly with the current Hyprland session.
 
 ---
 
 ## Conclusion
 
-Project Kintsugi standardizes on the Hyprland portal backend together with the generic GTK backend.
+Project Kintsugi standardizes on the combination of the generic XDG Desktop Portal service, the Hyprland backend, and the GTK backend.
 
-This architecture follows upstream recommendations while preserving the modular desktop design adopted throughout the project.
+This architecture provides a modular, standards-compliant, and well-integrated solution for modern Wayland desktops while remaining fully compatible with Fedora and the project's long-term maintenance objectives.
