@@ -127,11 +127,19 @@ The selected architecture was validated through:
 
 ---
 
-## Future Work
+## Tuned Profile Selection
 
-Selection of the default Tuned profile is intentionally outside the scope of this document.
+The validated Fedora installation initially used the `throughput-performance`
+profile.
 
-Power profile policy may be evaluated separately if future testing demonstrates measurable benefits for desktop usage.
+Although functional, this profile is primarily intended for server-oriented
+workloads.
+
+Practical validation on notebook hardware demonstrated that the `desktop`
+profile provides a more appropriate balance between responsiveness and energy
+efficiency while preserving normal desktop performance.
+
+Project Kintsugi therefore standardizes on the `desktop` Tuned profile.
 
 ---
 

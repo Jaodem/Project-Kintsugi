@@ -24,7 +24,9 @@ This implementation included:
 - validation of UPower;
 - validation of Tuned;
 - validation of system integration;
-- validation of compatibility with the Hyprland session.
+- validation of compatibility with the Hyprland session;
+- evaluation of Tuned profiles;
+- validation of the selected desktop profile;
 
 The implementation did not include:
 
@@ -37,7 +39,13 @@ The implementation did not include:
 
 ## Installed Components
 
-No additional packages were installed.
+No additional power management components were installed.
+
+The implementation also installed:
+
+- powertop
+
+for diagnostic and validation purposes.
 
 The implementation validated the components already present in the Fedora KDE Plasma installation.
 
@@ -72,6 +80,29 @@ Each component maintains a clearly defined responsibility within the desktop arc
 
 ---
 
+## Tuned Profile
+
+The Fedora installation initially used the `throughput-performance` profile.
+
+This profile is primarily designed for server workloads and favors sustained processor performance.
+
+Multiple validation sessions were performed using:
+
+- idle desktop workloads;
+- continuous multimedia playback;
+- repeated processor measurements using `turbostat`.
+
+Based on these measurements, the active profile was changed to:
+
+```text
+desktop
+```
+
+
+The selected profile maintained desktop responsiveness while reducing processor operating frequencies during typical notebook workloads.
+
+---
+
 ## Validation
 
 The implementation was validated through:
@@ -81,7 +112,10 @@ The implementation was validated through:
 - active Tuned service;
 - successful session integration;
 - successful operation within the Hyprland environment;
-- successful availability of Tuned power profiles.
+- successful availability of Tuned power profiles;
+- successful profile change to `desktop`;
+- successful multimedia playback;
+- repeated turbostat measurements;
 
 ---
 
@@ -93,17 +127,19 @@ The resulting implementation provides:
 - separation between power management and idle management;
 - compatibility with Hyprland;
 - compatibility with systemd;
-- compatibility with Fedora KDE Plasma.
+- compatibility with Fedora KDE Plasma;
+- notebook-oriented power policy;
+- reduced processor operating frequency during typical desktop workloads;
 
 ---
 
 ## Known Limitations
 
-Power profile selection has not yet been standardized.
+The selected configuration relies on Fedora's Tuned infrastructure and its
+available profiles.
 
-The system currently retains the profile configured by the Fedora installation.
-
-Future evaluation may determine whether a different profile better satisfies the project's desktop usage requirements.
+Future Fedora releases may introduce profile behavior changes or additional
+profiles that warrant re-evaluation.
 
 ---
 
