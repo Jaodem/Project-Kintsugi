@@ -43,8 +43,8 @@ The implementation validated the Fedora-provided:
 
 ```text
 xdg-user-dirs
-package.
 ```
+package.
 
 ---
 
