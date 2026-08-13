@@ -115,21 +115,32 @@ Where the existing Fedora infrastructure already provided an appropriate solutio
 
 Verify that the assembled environment behaves coherently as a complete desktop session.
 
-This phase focuses on integration rather than replacing components that are already working.
+This phase focuses on integration, refinement, and validation rather than replacing components that are already working.
 
-### Current areas for evaluation
+### Completed areas
 
-* [ ] Review desktop integration gaps
-* [ ] Evaluate Waybar icon and font integration
-* [ ] Evaluate graphical network-status integration
-* [ ] Evaluate Bluetooth tray integration
-* [ ] Validate whether these concerns should remain separate or form a single desktop-integration feature
+* [x] Review desktop integration gaps
+* [x] Evaluate Waybar icon and font integration
+* [x] Configure Waybar as the primary status bar presentation layer
+* [x] Configure Waybar modules for Hyprland, audio, networking, Bluetooth, keyboard layout, CPU, memory, battery, weather, clock, and system tray
+* [x] Implement CPU monitoring
+* [x] Implement memory monitoring
+* [x] Implement weather information
+* [x] Implement an interactive calendar popup
+* [x] Implement a Wi-Fi management menu
+* [x] Implement a Bluetooth management menu
+* [x] Implement a power profile menu
+* [x] Refine Waybar styling and module presentation
+* [x] Validate interactive desktop components within the Hyprland session
+* [x] Document the resulting Waybar configuration and supporting scripts
 
-These items are intentionally subject to investigation before implementation.
+The resulting configuration was validated through direct testing and normal interactive use within the Hyprland session.
 
-A documented limitation or an acceptable existing behavior may be considered complete without introducing additional software or configuration.
+The implementation preserves the existing desktop architecture. Waybar provides the presentation and interaction layer, while existing system services remain responsible for networking, Bluetooth, audio, power management, and other system functions.
 
-**Status:** In progress.
+No additional desktop-integration layer was introduced where existing components and dedicated scripts were sufficient.
+
+**Status:** Completed.
 
 ---
 
@@ -147,7 +158,7 @@ Potential areas include:
 
 These areas should be evaluated individually rather than implemented merely because they are technically available.
 
-**Status:** Pending evaluation.
+**Status:** In progress.
 
 ---
 
@@ -222,10 +233,12 @@ The roadmap follows the same principles as the rest of the project:
 
 ## Current Focus
 
-The next stage of Project Kintsugi is not another broad installation phase.
+The desktop environment and its core integration layer have been validated and refined.
 
-The immediate focus is to evaluate the remaining desktop-integration concerns, determine whether they represent genuine requirements, and implement them only if the investigation provides sufficient justification.
+The immediate focus is now the user's daily workflow, including keyboard-driven interaction, workspace organization, terminal usage, file-management workflows, and the development environment.
 
-After that, the project can proceed toward workflow improvements, optimization, and reproducibility in a controlled manner.
+These areas will be evaluated individually and implemented only where they provide a clear benefit to the overall desktop workflow.
+
+After workflow improvements have been evaluated and validated, the project can proceed toward optimization, maintenance, and reproducibility in a controlled manner.
 
 > The roadmap is a living representation of the project's actual state. It should be updated as decisions are made rather than used as a predetermined list of changes.
