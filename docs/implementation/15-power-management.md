@@ -26,7 +26,7 @@ This implementation included:
 - validation of system integration;
 - validation of compatibility with the Hyprland session;
 - evaluation of Tuned profiles;
-- validation of the selected desktop profile;
+- validation of the selected `desktop` profile;
 
 The implementation did not include:
 
@@ -76,6 +76,31 @@ hypridle
 hyprlock
 ```
 
+### Power Profile Selection
+
+Fedora's `tuned-ppd` compatibility daemon was disabled because it overrides
+the manually selected Tuned profile during system startup.
+
+The system uses Tuned directly for power profile management. The
+`tuned-ppd.service` unit is masked to prevent automatic profile changes, and
+the selected Tuned profile is therefore persistent across reboots.
+
+The resulting configuration uses:
+
+```text
+tuned.service
+    │
+    └── selected Tuned profile: desktop
+
+tuned-ppd.service
+    │
+    └── masked
+```
+
+This configuration preserves the native Fedora Tuned infrastructure while
+preventing the PPD compatibility layer from replacing the manually selected
+profile.
+
 Each component maintains a clearly defined responsibility within the desktop architecture.
 
 ---
@@ -113,7 +138,7 @@ The implementation was validated through:
 - successful session integration;
 - successful operation within the Hyprland environment;
 - successful availability of Tuned power profiles;
-- successful profile change to `desktop`;
+- successful persistence of the `desktop` profile across system reboots;
 - successful multimedia playback;
 - repeated turbostat measurements;
 
@@ -130,6 +155,8 @@ The resulting implementation provides:
 - compatibility with Fedora KDE Plasma;
 - notebook-oriented power policy;
 - reduced processor operating frequency during typical desktop workloads;
+- persistent `desktop` Tuned profile across system reboots;
+- disabled `tuned-ppd` compatibility layer to prevent profile overrides;
 
 ---
 
@@ -138,8 +165,15 @@ The resulting implementation provides:
 The selected configuration relies on Fedora's Tuned infrastructure and its
 available profiles.
 
-Future Fedora releases may introduce profile behavior changes or additional
-profiles that warrant re-evaluation.
+The `tuned-ppd` compatibility daemon is intentionally masked because it can
+override the manually selected Tuned profile during startup.
+
+As a result, desktop environments or applications that rely specifically on
+the Power Profiles D-Bus compatibility interface may not be able to change
+the Tuned profile through that interface.
+
+Future Fedora releases may introduce changes to Tuned, `tuned-ppd`, or the
+Power Profiles compatibility layer that warrant re-evaluation.
 
 ---
 
