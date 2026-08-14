@@ -144,19 +144,44 @@ No additional desktop-integration layer was introduced where existing components
 
 ---
 
-## Phase 4 — Workflow
+## Phase 4 — Workflow and Daily Use
 
 Improve the environment around the way the system is actually used.
+
+This phase is driven by real-world usage rather than a predefined list of software or configuration changes.
 
 Potential areas include:
 
 * [ ] Keyboard-driven workflow
 * [ ] Workspace organization
+* [ ] Window management
 * [ ] Terminal workflow
 * [ ] File-management workflow
 * [ ] Development environment
 
-These areas should be evaluated individually rather than implemented merely because they are technically available.
+Additional areas may emerge through daily use and will be investigated before implementation.
+
+Current investigation areas include:
+
+* Desktop notification behavior
+* Multi-monitor configuration and scaling
+* Lock screen and idle behavior
+* Display power management
+* Wallpaper management
+* Desktop appearance and theming
+* Graphical session and power controls
+
+These areas are not implementation requirements. Each one must first be investigated and justified according to the project's decision criteria.
+
+The phase follows the project's incremental workflow:
+
+1. Observe a real requirement or limitation.
+2. Investigate the current behavior.
+3. Evaluate alternatives when necessary.
+4. Make an explicit decision.
+5. Implement the smallest justified change.
+6. Validate the result through actual use.
+7. Document the final state.
 
 **Status:** In progress.
 
