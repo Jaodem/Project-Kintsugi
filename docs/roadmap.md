@@ -150,30 +150,7 @@ Improve the environment around the way the system is actually used.
 
 This phase is driven by real-world usage rather than a predefined list of software or configuration changes.
 
-Potential areas include:
-
-* [ ] Keyboard-driven workflow
-* [ ] Workspace organization
-* [ ] Window management
-* [ ] Terminal workflow
-* [ ] File-management workflow
-* [ ] Development environment
-
-Additional areas may emerge through daily use and will be investigated before implementation.
-
-Current investigation areas include:
-
-* Desktop notification behavior
-* Multi-monitor configuration and scaling
-* Lock screen and idle behavior
-* Display power management
-* Wallpaper management
-* Desktop appearance and theming
-* Graphical session and power controls
-
-These areas are not implementation requirements. Each one must first be investigated and justified according to the project's decision criteria.
-
-The phase follows the project's incremental workflow:
+Each subphase focuses on a specific aspect of the daily workflow and follows the project's incremental implementation process:
 
 1. Observe a real requirement or limitation.
 2. Investigate the current behavior.
@@ -183,7 +160,174 @@ The phase follows the project's incremental workflow:
 6. Validate the result through actual use.
 7. Document the final state.
 
-**Status:** In progress.
+---
+
+### 4.1 — Menus and Basic Actions
+
+* [x] Implement a dedicated session menu
+* [x] Move the session menu script to the Hyprland configuration
+* [x] Replace the previous `Super + M` session binding with `Ctrl + Alt + Delete`
+* [x] Use a centered Fuzzel presentation for the session menu
+* [x] Validate Lock, Logout, Suspend, Reboot, and Shutdown actions
+* [x] Rename `power-menu.sh` to `power-profile.sh`
+* [x] Review Fuzzel mouse and dismissal behavior
+* [x] Review Wi-Fi ON/OFF behavior
+* [x] Review Bluetooth ON/OFF behavior
+* [x] Document the resulting Hyprland workflow configuration
+* [x] Document the resulting Waybar configuration and supporting scripts
+
+**Status:** Completed.
+
+The first workflow refinement established dedicated interactive controls for common session and system actions.
+
+The session menu is now implemented as a Hyprland-specific workflow component under:
+
+```text
+~/.config/hypr/scripts/session-menu.sh
+```
+
+The session menu provides:
+
+```text
+Lock
+Logout
+Suspend
+Reboot
+Shutdown
+```
+
+and is invoked through:
+
+```text
+Ctrl + Alt + Delete
+```
+
+Fuzzel was evaluated as the common interactive interface for these menus. Its mouse behavior was investigated and confirmed to be provided by Fuzzel itself rather than by a Hyprland window-management rule.
+
+The Wi-Fi and Bluetooth menus were also reviewed and validated with their respective ON/OFF controls.
+
+The resulting Hyprland workflow is documented in:
+
+```text
+docs/configuration/hyprland.md
+```
+
+The corresponding Waybar configuration and supporting scripts are documented separately in:
+
+```text
+docs/configuration/waybar.md
+```
+
+---
+
+### 4.2 — Window Management
+
+* [ ] Implement keyboard-based window movement
+* [ ] Implement keyboard-based window resizing
+* [ ] Review `special:magic` scratchpad behavior
+* [ ] Determine whether an application should be assigned to the scratchpad
+
+**Status:** Pending.
+
+This subphase will focus on improving keyboard-driven window management and establishing the intended scratchpad workflow.
+
+---
+
+### 4.3 — Input
+
+* [ ] Review and refine `follow_mouse`
+* [ ] Determine the intended mouse-focus behavior
+* [ ] Determine the final keyboard and mouse interaction model
+
+**Status:** Pending.
+
+Input behavior will be evaluated independently from window-management bindings to avoid introducing unnecessary interaction complexity.
+
+---
+
+### 4.4 — Notifications
+
+* [ ] Review the current Mako configuration
+* [ ] Correct notification timeout behavior
+* [ ] Review notification urgency handling
+* [ ] Remove automatic suspension triggered by critical battery level
+
+**Status:** Pending.
+
+This subphase will focus on making notification behavior predictable and consistent with the intended desktop workflow.
+
+---
+
+### 4.5 — Monitors
+
+* [ ] Resolve monitor scaling definitively at `1.0`
+* [ ] Implement a Fuzzel-based monitor management menu
+* [ ] Provide convenient access to monitor configuration
+* [ ] Determine whether monitor profiles are required
+
+**Status:** Pending.
+
+The objective is to make monitor configuration accessible without introducing unnecessary persistent configuration complexity.
+
+---
+
+### 4.6 — Wallpaper
+
+* [ ] Evaluate wallpaper management tools
+* [ ] Select the appropriate wallpaper implementation
+* [ ] Determine whether to use one wallpaper across all monitors or separate wallpapers
+* [ ] Remove the default Hyprland wallpaper permanently
+
+**Status:** Pending.
+
+Wallpaper management will be evaluated as a separate desktop-appearance concern rather than being coupled to monitor management.
+
+---
+
+### 4.7 — Keyboard as the Primary Interface
+
+* [ ] Review existing keyboard bindings
+* [ ] Add useful workflow actions
+* [ ] Evaluate Fuzzel as a command-oriented interaction layer
+* [ ] Review multimedia bindings
+* [ ] Review brightness controls
+* [ ] Review audio controls
+* [ ] Identify additional frequently used keyboard actions
+
+**Status:** Pending.
+
+This subphase will consolidate the keyboard-driven workflow after the underlying window, input, monitor, and desktop-control behavior has been established.
+
+---
+
+### 4.8 — Organization
+
+* [ ] Separate the Hyprland Lua configuration into modules
+* [ ] Organize Hyprland-specific scripts
+* [ ] Document keyboard bindings
+* [ ] Review configuration ownership
+* [ ] Leave the configuration in a maintainable final structure
+
+**Status:** Pending.
+
+Configuration reorganization will be performed after the workflow has stabilized so that the module structure reflects the actual responsibilities of the final configuration rather than an assumed architecture.
+
+---
+
+Phase 4 Principles
+
+Phase 4 follows the project's existing engineering principles:
+
+1. Improve the workflow based on actual use.
+2. Investigate existing behavior before introducing changes.
+3. Prefer existing system infrastructure when it is suitable.
+4. Keep functionality separated according to component responsibility.
+5. Use dedicated scripts when they simplify the configuration without creating unnecessary dependencies.
+6. Validate interactive behavior through actual use.
+7. Document important decisions and final configuration state.
+8. Avoid premature reorganization before the workflow is understood.
+9. Treat intentional non-changes as valid outcomes.
+10. Implement each subphase independently when possible.
 
 ---
 
