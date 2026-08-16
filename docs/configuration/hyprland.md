@@ -23,6 +23,10 @@ The configuration is maintained through Lua and dedicated scripts, with system-m
 This configuration includes:
 
 * practical Hyprland keyboard bindings;
+* directional keyboard focus movement;
+* keyboard-based tiled-window movement;
+* precise keyboard-based floating-window movement;
+* keyboard-based window resizing;
 * session management through a dedicated session menu;
 * integration with Fuzzel for interactive session controls;
 * separation of Hyprland-specific scripts from Waybar scripts;
@@ -33,8 +37,7 @@ The configuration does not include:
 * replacing Hyprland;
 * replacing Fuzzel;
 * introducing a separate desktop environment;
-* implementing window-management refinements;
-* finalizing mouse and keyboard input behavior;
+* finalizing all mouse and keyboard input behavior;
 * implementing monitor management;
 * implementing wallpaper management;
 * reorganizing the complete Hyprland configuration into modules.
@@ -181,6 +184,160 @@ After reloading the Hyprland configuration, the new binding was validated throug
 
 ---
 
+## Keyboard-Driven Window Management
+
+Hyprland window management has been extended with dedicated keyboard bindings for focus movement, window movement, floating-window positioning, and window resizing.
+
+The bindings are defined in:
+
+```text
+~/.config/hypr/hyprland.lua
+```
+
+The current keyboard workflow is:
+
+```text
+Super + Arrow
+    Move focus between windows
+
+Super + Shift + Arrow
+    Move the active window within the Hyprland layout
+
+Super + Alt + Arrow
+    Move a floating window precisely
+
+Super + Ctrl + Arrow
+    Resize the active window precisely
+```
+
+### Focus Movement
+
+The `Super + Arrow` bindings move keyboard focus between adjacent windows:
+
+```lua
+hl.bind(mainMod .. " + left",  hl.dsp.focus({ direction = "left" }))
+hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
+hl.bind(mainMod .. " + up",    hl.dsp.focus({ direction = "up" }))
+hl.bind(mainMod .. " + down",  hl.dsp.focus({ direction = "down" }))
+```
+
+This provides directional keyboard navigation without moving or resizing the focused window.
+
+### Tiled Window Movement
+
+The `Super + Shift + Arrow` bindings move the active window through the Hyprland layout:
+
+```lua
+hl.bind(mainMod .. " + SHIFT + left",  hl.dsp.window.move({ direction = "l" }))
+hl.bind(mainMod .. " + SHIFT + right", hl.dsp.window.move({ direction = "r" }))
+hl.bind(mainMod .. " + SHIFT + up",    hl.dsp.window.move({ direction = "u" }))
+hl.bind(mainMod .. " + SHIFT + down",  hl.dsp.window.move({ direction = "d" }))
+```
+
+This uses Hyprland's directional window-movement dispatcher and therefore operates according to the active layout rather than moving the window by arbitrary screen coordinates.
+
+### Floating Window Movement
+
+Floating windows can be moved precisely using `Super + Alt + Arrow`.
+
+Each key press moves the active floating window by 40 pixels:
+
+```lua
+hl.bind(mainMod .. " + ALT + left",
+        hl.dsp.window.move({ x = -40, y = 0, relative = true }),
+        { repeating = true })
+
+hl.bind(mainMod .. " + ALT + right",
+        hl.dsp.window.move({ x = 40, y = 0, relative = true }),
+        { repeating = true })
+
+hl.bind(mainMod .. " + ALT + up",
+        hl.dsp.window.move({ x = 0, y = -40, relative = true }),
+        { repeating = true })
+
+hl.bind(mainMod .. " + ALT + down",
+        hl.dsp.window.move({ x = 0, y = 40, relative = true }),
+        { repeating = true })
+```
+
+The bindings use relative coordinates and are configured as repeating bindings so that holding the key continuously moves the window.
+
+This provides keyboard-controlled positioning comparable to mouse-based movement while retaining a fixed movement increment.
+
+### Window Resizing
+
+The active window can be resized using `Super + Ctrl + Arrow`.
+
+Each key press changes the corresponding dimension by 40 pixels:
+
+```lua
+hl.bind(mainMod .. " + CTRL + left",
+        hl.dsp.window.resize({ width = -40, height = 0, relative = true }),
+        { repeating = true })
+
+hl.bind(mainMod .. " + CTRL + right",
+        hl.dsp.window.resize({ width = 40, height = 0, relative = true }),
+        { repeating = true })
+
+hl.bind(mainMod .. " + CTRL + up",
+        hl.dsp.window.resize({ width = 0, height = -40, relative = true }),
+        { repeating = true })
+
+hl.bind(mainMod .. " + CTRL + down",
+        hl.dsp.window.resize({ width = 0, height = 40, relative = true }),
+        { repeating = true })
+```
+
+The bindings use relative coordinates and are configured as repeating bindings so that holding the key continuously moves the window.
+
+This provides keyboard-controlled positioning comparable to mouse-based movement while retaining a fixed movement increment.
+
+### Window Resizing
+
+The active window can be resized using `Super + Ctrl + Arrow`.
+
+Each key press changes the corresponding dimension by 40 pixels:
+
+```lua
+hl.bind(mainMod .. " + CTRL + left",
+        hl.dsp.window.resize({ x = -40, y = 0, relative = true }),
+        { repeating = true })
+
+hl.bind(mainMod .. " + CTRL + right",
+        hl.dsp.window.resize({ x = 40, y = 0, relative = true }),
+        { repeating = true })
+
+hl.bind(mainMod .. " + CTRL + up",
+        hl.dsp.window.resize({ x = 0, y = -40, relative = true }),
+        { repeating = true })
+
+hl.bind(mainMod .. " + CTRL + down",
+        hl.dsp.window.resize({ x = 0, y = 40, relative = true }),
+        { repeating = true })
+```
+
+The `relative = true` parameter is required for these bindings because the values represent size deltas rather than absolute dimensions.
+
+### Floating Window Mode
+
+The existing:
+
+```text
+Super + V
+```
+
+binding toggles the focused window between tiled and floating mode:
+
+```text
+hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+```
+
+This allows the precise `Super + Alt + Arrow` movement workflow to be used when a window is floating.
+
+The same floating state can also be resized using the `Super + Ctrl + Arrow` bindings.
+
+---
+
 ## Fuzzel Integration
 
 Fuzzel is used as the interactive interface for the session menu.
@@ -281,6 +438,11 @@ The resulting Hyprland workflow provides:
 * a dedicated global session menu;
 * keyboard access through `Ctrl + Alt + Delete`;
 * centralized Fuzzel presentation;
+* directional keyboard focus movement;
+* keyboard-based movement of tiled windows;
+* precise keyboard-based movement of floating windows;
+* keyboard-based window resizing;
+* repeating bindings for continuous floating-window movement and resizing;
 * lock, logout, suspend, reboot, and shutdown actions;
 * separation between Hyprland-specific and Waybar-specific scripts;
 * integration with the existing system session and power-management infrastructure;
@@ -296,11 +458,9 @@ The current document covers the validated Hyprland workflow implemented during P
 
 The complete Hyprland configuration has not yet been reorganized into separate Lua modules.
 
-Window movement and keyboard-based resizing have not yet been implemented as part of the current workflow refinement.
-
 Scratchpad behavior has not yet been finalized.
 
-Mouse and keyboard input behavior, including `follow_mouse`, remains under evaluation.
+Additional mouse and keyboard input behavior, including `follow_mouse`, remains under evaluation.
 
 Monitor management, wallpaper management, and broader keyboard-driven workflow improvements remain pending.
 
@@ -330,6 +490,12 @@ The current Hyprland workflow has been successfully refined and validated for Pr
 The session-management interface is now separated from Waybar and implemented as a Hyprland-specific workflow component.
 
 A dedicated Fuzzel session menu provides centralized access to locking, logout, suspend, reboot, and shutdown operations through the `Ctrl + Alt + Delete` keyboard binding.
+
+The Hyprland keyboard workflow has also been extended with directional focus movement, tiled-window movement, precise floating-window movement, and keyboard-based window resizing.
+
+Floating-window movement and resizing use relative coordinate deltas and repeating keyboard bindings, allowing continuous adjustment while a key is held.
+
+These bindings provide a consistent keyboard-driven workflow while preserving Hyprland's existing layout-based behavior for tiled windows.
 
 The implementation preserves the project's modular architecture by keeping compositor-specific workflow scripts under the Hyprland configuration while retaining Waybar-specific scripts under the Waybar configuration.
 
