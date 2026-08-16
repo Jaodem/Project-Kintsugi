@@ -222,14 +222,19 @@ docs/configuration/waybar.md
 
 ### 4.2 — Window Management
 
-* [ ] Implement keyboard-based window movement
-* [ ] Implement keyboard-based window resizing
-* [ ] Review `special:magic` scratchpad behavior
-* [ ] Determine whether an application should be assigned to the scratchpad
+* [x] Implement keyboard-based window focus movement
+* [x] Implement keyboard-based tiled window movement
+* [x] Implement precise movement for floating windows
+* [x] Implement keyboard-based window resizing
+* [x] Validate repeated movement and resizing bindings
+* [x] Review `special:magic` scratchpad behavior
+* [x] Determine whether an application should be assigned to the scratchpad
 
-**Status:** Pending.
+**Status:** In Progress.
 
-This subphase will focus on improving keyboard-driven window management and establishing the intended scratchpad workflow.
+This subphase established and validated the intended keyboard-driven window-management workflow, including window focus, movement, floating-window positioning, and resizing.
+
+Scratchpad behavior was also reviewed and finalized according to the intended workflow.
 
 ---
 
