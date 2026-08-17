@@ -38,8 +38,6 @@ The implementation did not include:
 
 ## Installed Components
 
-No additional components were installed.
-
 The implementation uses the following components:
 
 ```text
@@ -93,11 +91,39 @@ The service executes:
 
 This allows clipboard contents to be retained after the application that produced them exits.
 
+The service is integrated into the graphical session through:
+
+```text
+graphical-session.target
+```
+
+The service is enabled as part of the graphical session rather than `default.target`.
+
+This ensures that `cliphist` starts after the Wayland session is available and prevents `wl-paste` from attempting to connect before the Wayland socket exists.
+
+The resulting service configuration is:
+
+```text
+[Unit]
+Description=Clipboard history watcher
+
+[Service]
+ExecStart=/usr/bin/wl-paste --type text --watch /usr/bin/cliphist store
+Restart=on-failure
+
+[Install]
+WantedBy=graphical-session.target
+```
+
+The service is enabled with:
+
+```text
+systemctl --user enable cliphist.service
+```
+
 ---
 
 ## Validation
-
-The implementation was validated through:
 
 The implementation was validated through:
 
@@ -112,6 +138,8 @@ The implementation was validated through:
 - successful restoration through `cliphist decode`;
 - successful integration with the Hyprland session;
 - successful preservation of emoji clipboard contents after using KDE Plasma's Emoji Selector.
+- successful automatic startup of `cliphist.service` after a full system reboot;
+- confirmation that no manual service restart was required after reboot;
 
 ---
 

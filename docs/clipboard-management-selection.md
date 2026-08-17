@@ -101,6 +101,22 @@ Validation confirmed:
 * compatibility with `wl-copy`;
 * successful integration with the Hyprland session.
 
+### Session Integration
+
+`cliphist` is integrated as a user-level systemd service and starts with the graphical Wayland session.
+
+The service is enabled through:
+
+```text
+graphical-session.target
+```
+
+instead of `default.target`.
+
+This prevents the service from starting before the Wayland socket is available and ensures reliable clipboard persistence after a full system boot.
+
+The integration was validated by rebooting the system and confirming that the service started automatically without manual intervention.
+
 ---
 
 ## Decision
