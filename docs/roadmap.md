@@ -164,59 +164,20 @@ Each subphase focuses on a specific aspect of the daily workflow and follows the
 
 ### 4.1 — Menus and Basic Actions
 
-* [x] Implement a dedicated session menu
-* [x] Move the session menu script to the Hyprland configuration
-* [x] Replace the previous `Super + M` session binding with `Ctrl + Alt + Delete`
-* [x] Use a centered Fuzzel presentation for the session menu
-* [x] Validate Lock, Logout, Suspend, Reboot, and Shutdown actions
-* [x] Rename `power-menu.sh` to `power-profile.sh`
-* [x] Review Fuzzel mouse and dismissal behavior
-* [x] Review Wi-Fi ON/OFF behavior
-* [x] Review Bluetooth ON/OFF behavior
-* [x] Document the resulting Hyprland workflow configuration
-* [x] Document the resulting Waybar configuration and supporting scripts
+### 4.1 — Menus and Basic Actions
+
+* [x] Implement dedicated session menu with Fuzzel
+* [x] Replace `Super + M` with `Ctrl + Alt + Delete` for session actions
+* [x] Validate session actions (Lock, Logout, Suspend, Reboot, Shutdown)
+* [x] Document Hyprland workflow and Waybar configuration
 
 **Status:** Completed.
 
-The first workflow refinement established dedicated interactive controls for common session and system actions.
+The session menu is now a Hyprland-specific workflow component under `~/.config/hypr/scripts/session-menu.sh`, providing Lock, Logout, Suspend, Reboot, and Shutdown actions through a centered Fuzzel interface.
 
-The session menu is now implemented as a Hyprland-specific workflow component under:
+Wi-Fi and Bluetooth ON/OFF controls were reviewed and validated during the same period.
 
-```text
-~/.config/hypr/scripts/session-menu.sh
-```
-
-The session menu provides:
-
-```text
-Lock
-Logout
-Suspend
-Reboot
-Shutdown
-```
-
-and is invoked through:
-
-```text
-Ctrl + Alt + Delete
-```
-
-Fuzzel was evaluated as the common interactive interface for these menus. Its mouse behavior was investigated and confirmed to be provided by Fuzzel itself rather than by a Hyprland window-management rule.
-
-The Wi-Fi and Bluetooth menus were also reviewed and validated with their respective ON/OFF controls.
-
-The resulting Hyprland workflow is documented in:
-
-```text
-docs/configuration/hyprland.md
-```
-
-The corresponding Waybar configuration and supporting scripts are documented separately in:
-
-```text
-docs/configuration/waybar.md
-```
+The resulting configurations are documented in `docs/configuration/hyprland.md` and `docs/configuration/waybar.md`.
 
 ---
 
@@ -253,13 +214,19 @@ This subphase established several daily-use application and clipboard workflow i
 
 ### 4.4 — Input
 
-* [ ] Review and refine `follow_mouse`
-* [ ] Determine the intended mouse-focus behavior
-* [ ] Determine the final keyboard and mouse interaction model
+### 4.4 — Input
 
-**Status:** Pending.
+* [x] Review and refine `follow_mouse`
+* [x] Determine the intended mouse-focus behavior
+* [x] Determine the final keyboard and mouse interaction model
 
-Input behavior will be evaluated independently from window-management bindings to avoid introducing unnecessary interaction complexity.
+**Status:** Completed.
+
+The mouse focus behavior is now configurable at runtime through a dedicated toggle (`Super + F`) that switches between `follow_mouse = 1` (focus-follows-mouse) and `follow_mouse = 0` (cursor movement does not change focus).
+
+The chosen model is hybrid and user-selectable, allowing the user to adapt the behavior to the current workflow without restarting the compositor.
+
+The implementation is documented in `docs/configuration/hyprland.md` under the Mouse Focus Behavior section.
 
 ---
 
