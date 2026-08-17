@@ -164,8 +164,6 @@ Each subphase focuses on a specific aspect of the daily workflow and follows the
 
 ### 4.1 — Menus and Basic Actions
 
-### 4.1 — Menus and Basic Actions
-
 * [x] Implement dedicated session menu with Fuzzel
 * [x] Replace `Super + M` with `Ctrl + Alt + Delete` for session actions
 * [x] Validate session actions (Lock, Logout, Suspend, Reboot, Shutdown)
@@ -214,8 +212,6 @@ This subphase established several daily-use application and clipboard workflow i
 
 ### 4.4 — Input
 
-### 4.4 — Input
-
 * [x] Review and refine `follow_mouse`
 * [x] Determine the intended mouse-focus behavior
 * [x] Determine the final keyboard and mouse interaction model
@@ -230,7 +226,34 @@ The implementation is documented in `docs/configuration/hyprland.md` under the M
 
 ---
 
-### 4.5 — Notifications
+### 4.5 — Screen Locker and Idle
+
+* [ ] Review current screen locker behavior and configuration
+* [ ] Evaluate idle timeout settings and lock triggers
+* [ ] Assess integration with session management (suspend, logout)
+* [ ] Validate unlock experience and authentication flow
+* [ ] Adjust screen locking behavior based on daily use
+
+**Status:** Pending.
+
+The screen locker was installed and configured as part of Phase 1, but its daily-use behavior (timeouts, triggers, integration with power management, and the unlock experience) has not yet been reviewed as a workflow component.
+
+---
+
+### 4.6 — Core Applications: Terminal, File Manager, Screenshot
+
+* [ ] Review terminal emulator configuration (profile, keybindings, theme, fonts)
+* [ ] Review file manager configuration (views, keybindings, integration, mounting)
+* [ ] Review screenshot utility configuration (keybindings, capture modes, clipboard integration)
+* [ ] Validate daily-use workflows for these applications
+
+**Status:** Pending.
+
+These applications were installed with minimal configuration in Phase 1. Their daily-use behavior and integration with the Hyprland workflow have not yet been refined.
+
+---
+
+### 4.7 — Notifications
 
 * [ ] Review the current Mako configuration
 * [ ] Correct notification timeout behavior
@@ -243,7 +266,7 @@ This subphase will focus on making notification behavior predictable and consist
 
 ---
 
-### 4.6 — Monitors
+### 4.8 — Monitors
 
 * [ ] Resolve monitor scaling definitively at `1.0`
 * [ ] Implement a Fuzzel-based monitor management menu
@@ -256,7 +279,7 @@ The objective is to make monitor configuration accessible without introducing un
 
 ---
 
-### 4.7 — Wallpaper
+### 4.9 — Wallpaper
 
 * [ ] Evaluate wallpaper management tools
 * [ ] Select the appropriate wallpaper implementation
@@ -269,7 +292,7 @@ Wallpaper management will be evaluated as a separate desktop-appearance concern 
 
 ---
 
-### 4.8 — Keyboard as the Primary Interface
+### 4.10 — Keyboard as the Primary Interface
 
 * [ ] Review existing keyboard bindings
 * [ ] Add useful workflow actions
@@ -285,7 +308,7 @@ This subphase will consolidate the keyboard-driven workflow after the underlying
 
 ---
 
-### 4.9 — Organization
+### 4.11 — Organization
 
 * [ ] Separate the Hyprland Lua configuration into modules
 * [ ] Organize Hyprland-specific scripts
