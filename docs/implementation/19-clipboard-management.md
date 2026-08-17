@@ -4,7 +4,7 @@
 
 The objective of this implementation was to validate and standardize the Clipboard Management infrastructure used by Project Kintsugi.
 
-Rather than introducing additional software, the implementation focused on verifying the native Wayland clipboard infrastructure provided by the existing Fedora environment.
+The implementation focused on validating the native Wayland clipboard infrastructure and adding lightweight clipboard persistence through cliphist where required by short-lived clipboard producers.
 
 ---
 
@@ -24,13 +24,15 @@ This implementation included:
 - validation of wl-clipboard utilities;
 - validation of clipboard data exchange;
 - validation of MIME type support;
-- validation of compatibility with the Hyprland session.
+- validation of compatibility with the Hyprland session;
+- installation and validation of cliphist;
+- configuration of clipboard history persistence;
+- integration of cliphist with the user-level systemd session.
 
 The implementation did not include:
 
-- installing clipboard history managers;
-- configuring clipboard synchronization;
-- enabling persistent clipboard storage.
+- clipboard synchronization between devices;
+- integration with a full desktop clipboard manager such as Klipper or CopyQ.
 
 ---
 
@@ -38,11 +40,16 @@ The implementation did not include:
 
 No additional components were installed.
 
-The implementation validated the existing Fedora component:
+The implementation uses the following components:
 
 ```text
 wl-clipboard
+cliphist
 ```
+
+`wl-clipboard` provides the command-line interface to the Wayland clipboard.
+
+`cliphist` provides clipboard history and persistence through a user-level systemd service.
 
 ---
 
@@ -64,7 +71,27 @@ Clipboard Selection
         │
         ├── wl-copy
         └── wl-paste
+                │
+                ▼
+             cliphist
+                │
+                ▼
+       Clipboard History Storage
 ```
+
+The clipboard history watcher runs as a user-level systemd service:
+
+```text
+cliphist.service
+```
+
+The service executes:
+
+```text
+/usr/bin/wl-paste --type text --watch /usr/bin/cliphist store
+```
+
+This allows clipboard contents to be retained after the application that produced them exits.
 
 ---
 
@@ -72,12 +99,19 @@ Clipboard Selection
 
 The implementation was validated through:
 
+The implementation was validated through:
+
 - verification of the installed wl-clipboard package;
 - successful execution of wl-copy;
 - successful execution of wl-paste;
 - successful MIME type enumeration;
-- verification that no clipboard history manager is installed;
-- successful integration with the Hyprland session.
+- successful installation and execution of cliphist;
+- successful startup of `cliphist.service`;
+- successful storage of clipboard entries;
+- successful inspection through `cliphist list`;
+- successful restoration through `cliphist decode`;
+- successful integration with the Hyprland session;
+- successful preservation of emoji clipboard contents after using KDE Plasma's Emoji Selector.
 
 ---
 
@@ -90,17 +124,24 @@ The resulting implementation provides:
 - compatibility with Wayland;
 - compatibility with Hyprland;
 - support for multiple MIME types;
+- persistent clipboard history;
+- preservation of clipboard contents produced by short-lived applications;
+- lightweight user-level integration through systemd;
 - minimal additional system complexity.
 
 ---
 
 ## Known Limitations
 
-The selected implementation does not provide clipboard history or persistent clipboard storage.
+The current implementation provides clipboard history for text content through `cliphist`.
 
-These capabilities require optional clipboard history managers and are intentionally outside the scope of the current architecture.
+It does not provide:
 
-Future project requirements may justify evaluating a dedicated clipboard history solution.
+- clipboard synchronization between devices;
+- a graphical clipboard-history interface;
+- full desktop clipboard-manager functionality such as the features provided by Klipper or CopyQ.
+
+These capabilities remain outside the scope of the current implementation.
 
 ---
 
@@ -108,4 +149,6 @@ Future project requirements may justify evaluating a dedicated clipboard history
 
 Clipboard Management has been successfully standardized for Project Kintsugi.
 
-The validated implementation relies on the native Wayland clipboard infrastructure and wl-clipboard utilities while preserving the project's modular architecture and standards-based approach.
+The implementation relies on the native Wayland clipboard infrastructure and wl-clipboard utilities, with cliphist providing lightweight clipboard history and persistence.
+
+The resulting architecture remains compatible with Hyprland and preserves the project's modular design while ensuring that clipboard contents produced by short-lived applications, such as KDE Plasma's Emoji Selector, remain available after the originating application exits.

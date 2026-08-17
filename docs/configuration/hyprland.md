@@ -31,6 +31,9 @@ This configuration includes:
 * integration with Fuzzel for interactive session controls;
 * separation of Hyprland-specific scripts from Waybar scripts;
 * validation of the resulting session workflow.
+* integration with KDE Plasma's Emoji Selector;
+* integration with the terminal-based WhatsApp client;
+* clipboard persistence through `cliphist` for short-lived clipboard producers.
 
 The configuration does not include:
 
@@ -210,6 +213,103 @@ Super + Ctrl + Arrow
     Resize the active window precisely
 ```
 
+## Emoji Selector
+
+KDE Plasma's Emoji Selector is integrated directly into the Hyprland workflow.
+
+The selector is launched with:
+
+```text
+Super + .
+```
+
+The binding is defined as:
+
+```lua
+hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("~/.config/hypr/scripts/emoji-selector.sh"))
+```
+
+The application enforces its own minimum usable dimensions, so the small configured size does not reduce the selector below its supported minimum size.
+
+The resulting behavior is:
+
+```text
+Super + .
+    Open Emoji Selector near the current cursor position
+
+Emoji selection
+    Copy the selected emoji to the clipboard
+
+Esc
+    Close Emoji Selector
+```
+
+The final implementation launches plasma-emojier directly and does not require a dedicated launcher script.
+
+Clipboard persistence for the short-lived Emoji Selector is provided separately through `cliphist`.
+
+## Clipboard Persistence
+
+`cliphist` is used to preserve clipboard contents produced by short-lived applications such as KDE Plasma's Emoji Selector.
+
+The clipboard history watcher runs as a user-level systemd service:
+
+```text
+cliphist.service
+```
+
+The service runs:
+
+```text
+/usr/bin/wl-paste --type text --watch /usr/bin/cliphist store
+```
+
+This allows clipboard contents to remain available after the application that originally produced them exits.
+
+The clipboard history can be inspected with:
+
+```bash
+cliphist list
+```
+
+and individual entries can be restored to the Wayland clipboard with:
+
+```bash
+cliphist decode <entry> | wl-copy
+```
+
+The service is enabled to start automatically with the user's systemd session.
+
+## WhatsApp Terminal Client
+
+A terminal-based WhatsApp client was added to the workstation as part of the desktop application workflow.
+
+The selected client is `whatscli`.
+
+The application was installed from its upstream Linux release and placed in the user's local executable directory:
+
+```text
+~/.local/bin/whatscli
+```
+
+The executable is available through the user's `PATH`:
+
+```text
+command -v whatscli
+```
+
+The installed version is:
+
+```text
+whatscli 1.1.6
+```
+
+The application was selected after evaluating terminal-based WhatsApp alternatives.
+
+`wacli` was tested previously but was not retained because its workflow was not considered satisfactory for the intended daily use.
+
+The final WhatsApp client is therefore whatscli.
+
 ### Focus Movement
 
 The `Super + Arrow` bindings move keyboard focus between adjacent windows:
@@ -264,33 +364,6 @@ The bindings use relative coordinates and are configured as repeating bindings s
 
 This provides keyboard-controlled positioning comparable to mouse-based movement while retaining a fixed movement increment.
 
-### Window Resizing
-
-The active window can be resized using `Super + Ctrl + Arrow`.
-
-Each key press changes the corresponding dimension by 40 pixels:
-
-```lua
-hl.bind(mainMod .. " + CTRL + left",
-        hl.dsp.window.resize({ width = -40, height = 0, relative = true }),
-        { repeating = true })
-
-hl.bind(mainMod .. " + CTRL + right",
-        hl.dsp.window.resize({ width = 40, height = 0, relative = true }),
-        { repeating = true })
-
-hl.bind(mainMod .. " + CTRL + up",
-        hl.dsp.window.resize({ width = 0, height = -40, relative = true }),
-        { repeating = true })
-
-hl.bind(mainMod .. " + CTRL + down",
-        hl.dsp.window.resize({ width = 0, height = 40, relative = true }),
-        { repeating = true })
-```
-
-The bindings use relative coordinates and are configured as repeating bindings so that holding the key continuously moves the window.
-
-This provides keyboard-controlled positioning comparable to mouse-based movement while retaining a fixed movement increment.
 
 ### Window Resizing
 
@@ -446,7 +519,12 @@ The resulting Hyprland workflow provides:
 * lock, logout, suspend, reboot, and shutdown actions;
 * separation between Hyprland-specific and Waybar-specific scripts;
 * integration with the existing system session and power-management infrastructure;
-* no additional desktop-management layer.
+* no additional desktop-management layer;
+* KDE Plasma Emoji Selector integration with cursor-relative positioning;
+* direct `Super + .` access to the Emoji Selector;
+* terminal-based WhatsApp access through `whatscli`;
+* clipboard persistence through `cliphist` for short-lived clipboard producers.
+* persistent clipboard history through a user-level `cliphist` systemd service;
 
 The implementation keeps Hyprland responsible for compositor-level workflow while delegating session and power operations to the appropriate existing system services.
 
