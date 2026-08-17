@@ -187,6 +187,102 @@ After reloading the Hyprland configuration, the new binding was validated throug
 
 ---
 
+## Mouse Focus Behavior
+
+The mouse focus behavior is now configurable at runtime through a dedicated toggle.
+
+The `follow_mouse` option was investigated experimentally to understand the difference between its two states:
+
+* `follow_mouse = 1`: the window under the cursor receives focus automatically (focus-follows-mouse).
+* `follow_mouse = 0`: the cursor can move freely without changing the active window focus.
+
+Both values can be changed dynamically using `hyprctl eval` without restarting the compositor, which was validated through direct testing.
+
+### Decision
+
+The chosen interaction model is hybrid and user-selectable at runtime rather than fixed permanently to a single behavior.
+
+This allows the user to switch between focus-follows-mouse and a decoupled focus model depending on the current workflow or task.
+
+### Implementation
+
+The toggle is implemented through a dedicated script:
+
+```text
+~/.config/hypr/scripts/toggle-follow-mouse.sh
+```
+
+The script retrieves the current `follow_mouse` state using:
+
+```bash
+hyprctl getoption input:follow_mouse -j | jq -r '.int'
+```
+
+and toggles it using:
+
+```bash
+hyprctl eval 'hl.config({ input = { follow_mouse = 1 } })'
+```
+
+or:
+
+```bash
+hyprctl eval 'hl.config({ input = { follow_mouse = 0 } })'
+```
+
+The full script is:
+
+```bash
+#!/bin/bash
+
+current=$(hyprctl getoption input:follow_mouse -j | jq -r '.int')
+
+if [ "$current" = "1" ]; then
+    hyprctl eval 'hl.config({ input = { follow_mouse = 0 } })'
+else
+    hyprctl eval 'hl.config({ input = { follow_mouse = 1 } })'
+fi
+```
+
+The script is made executable and stored under the Hyprland-specific scripts directory.
+
+### Keyboard Binding
+
+The toggle is bound to:
+
+```text
+Super + F
+```
+
+The binding is defined in `~/.config/hypr/hyprland.lua` as:
+
+```lua
+-- Toggle mouse focus behavior (follow_mouse)
+hl.bind(mainMod .. " + F",
+        hl.dsp.exec_cmd("~/.config/hypr/scripts/toggle-follow-mouse.sh"))
+```
+
+### Validation
+
+The toggle was validated by switching between both states and observing the focus behavior while moving the cursor between windows.
+
+- In the active state (follow_mouse = 1), hovering over a different window correctly transferred focus.
+- In the inactive state (follow_mouse = 0), the cursor moved without changing the focused window.
+
+No side effects were observed in keyboard-based window movement or resizing, confirming that the mouse focus model operates independently from the keyboard interaction model.
+
+### Results
+
+The mouse focus behavior is now explicitly defined and user-controllable.
+
+The implementation provides a practical mechanism to switch between focus-follows-mouse and a keyboard-driven focus model without modifying the broader interaction workflow or requiring a Hyprland restart.
+
+This resolves the previously pending mouse input evaluation.
+
+
+
+---
+
 ## Keyboard-Driven Window Management
 
 Hyprland window management has been extended with dedicated keyboard bindings for focus movement, window movement, floating-window positioning, and window resizing.
@@ -537,8 +633,6 @@ The current document covers the validated Hyprland workflow implemented during P
 The complete Hyprland configuration has not yet been reorganized into separate Lua modules.
 
 Scratchpad behavior has not yet been finalized.
-
-Additional mouse and keyboard input behavior, including `follow_mouse`, remains under evaluation.
 
 Monitor management, wallpaper management, and broader keyboard-driven workflow improvements remain pending.
 
