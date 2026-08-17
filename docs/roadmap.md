@@ -230,7 +230,7 @@ docs/configuration/waybar.md
 * [x] Review `special:magic` scratchpad behavior
 * [x] Determine whether an application should be assigned to the scratchpad
 
-**Status:** In Progress.
+**Status:** Completed.
 
 This subphase established and validated the intended keyboard-driven window-management workflow, including window focus, movement, floating-window positioning, and resizing.
 
@@ -238,7 +238,20 @@ Scratchpad behavior was also reviewed and finalized according to the intended wo
 
 ---
 
-### 4.3 — Input
+### 4.3 — Applications and Clipboard
+
+* [x] Integrate KDE Plasma Emoji Selector into the Hyprland workflow
+* [x] Evaluate terminal-based WhatsApp clients
+* [x] Select and install `whatscli`
+* [x] Implement clipboard persistence with `cliphist`
+
+**Status:** Completed.
+
+This subphase established several daily-use application and clipboard workflow improvements based on actual usage requirements.
+
+---
+
+### 4.4 — Input
 
 * [ ] Review and refine `follow_mouse`
 * [ ] Determine the intended mouse-focus behavior
@@ -250,7 +263,7 @@ Input behavior will be evaluated independently from window-management bindings t
 
 ---
 
-### 4.4 — Notifications
+### 4.5 — Notifications
 
 * [ ] Review the current Mako configuration
 * [ ] Correct notification timeout behavior
@@ -263,7 +276,7 @@ This subphase will focus on making notification behavior predictable and consist
 
 ---
 
-### 4.5 — Monitors
+### 4.6 — Monitors
 
 * [ ] Resolve monitor scaling definitively at `1.0`
 * [ ] Implement a Fuzzel-based monitor management menu
@@ -276,7 +289,7 @@ The objective is to make monitor configuration accessible without introducing un
 
 ---
 
-### 4.6 — Wallpaper
+### 4.7 — Wallpaper
 
 * [ ] Evaluate wallpaper management tools
 * [ ] Select the appropriate wallpaper implementation
@@ -289,7 +302,7 @@ Wallpaper management will be evaluated as a separate desktop-appearance concern 
 
 ---
 
-### 4.7 — Keyboard as the Primary Interface
+### 4.8 — Keyboard as the Primary Interface
 
 * [ ] Review existing keyboard bindings
 * [ ] Add useful workflow actions
@@ -305,7 +318,7 @@ This subphase will consolidate the keyboard-driven workflow after the underlying
 
 ---
 
-### 4.8 — Organization
+### 4.9 — Organization
 
 * [ ] Separate the Hyprland Lua configuration into modules
 * [ ] Organize Hyprland-specific scripts
