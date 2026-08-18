@@ -292,15 +292,27 @@ The configurations are documented in:
 
 ### 4.7 — Screen Locker and Idle
 
-* [ ] Review current screen locker behavior and configuration
-* [ ] Evaluate idle timeout settings and lock triggers
-* [ ] Assess integration with session management (suspend, logout)
-* [ ] Validate unlock experience and authentication flow
-* [ ] Adjust screen locking behavior based on daily use
+* [x] Review current screen locker behavior and configuration
+* [x] Evaluate idle timeout settings and lock triggers
+* [x] Assess integration with session management (suspend, logout)
+* [x] Validate unlock experience and authentication flow
+* [x] Configure lock screen information (time, date, and battery)
+* [x] Integrate MPRIS media information and controls
+* [x] Validate the final screen locker configuration
 
-**Status:** Pending.
+**Status:** Completed.
 
-The screen locker was installed and configured as part of Phase 1, but its daily-use behavior (timeouts, triggers, integration with power management, and the unlock experience) has not yet been reviewed as a workflow component.
+The screen locker was reviewed and refined as a daily-use workflow component.
+
+The existing lock and unlock behavior was validated and preserved. The lock screen was then extended to display the current time, date, and battery status, with battery information provided through UPower and a dedicated script using Nerd Font battery icons.
+
+MPRIS integration was also implemented through `playerctl`. When a compatible media player is active, the lock screen displays the current artist, track title, and playback state, together with clickable Previous, Play/Pause, and Next controls. The multimedia elements are automatically hidden when no media player is active.
+
+The current implementation was validated with `ytm_player` and remains player-agnostic through the MPRIS interface.
+
+The resulting hyprlock configuration and supporting scripts are documented in `docs/configuration/hyprlock.md`.
+
+Idle and DPMS behavior remain separated from the hyprlock presentation layer. Monitor power-management behavior was previously resolved as part of Phase 4.5.
 
 ---
 
