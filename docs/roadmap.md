@@ -264,7 +264,33 @@ The implementation is documented in `docs/configuration/hyprland.md` under the M
 
 ---
 
-### 4.6 — Screen Locker and Idle
+### 4.6 — Core Applications: Terminal, File Manager, Screenshot
+
+* [x] Review terminal emulator configuration (profile, keybindings, theme, fonts)
+* [x] Review file manager configuration (views, keybindings, integration, mounting)
+* [x] Review screenshot utility configuration (keybindings, capture modes, clipboard integration)
+* [x] Validate daily-use workflows for these applications
+
+**Status:** Completed.
+
+The core applications have been reviewed and validated as part of the daily workflow.
+
+**Terminal (Kitty):** The terminal remains with its default configuration. No customization was required because the current setup already satisfies Project Kintsugi's requirements for performance, usability, Wayland integration, and maintainability. The documented shortcut was corrected to `Super + T`.
+
+**File Manager (Dolphin):** Dolphin was configured with proper MIME associations (KWrite for text, Okular for PDFs, Gwenview for images, Ark for archives) and integrated with Kitty for terminal access. The `F4` binding for the embedded terminal was removed, leaving `Shift + F4` and `Alt + Shift + F4` to open Kitty in the current directory.
+
+**Screenshot Utility (Grimblast):** All three bindings (`Print`, `Shift + Print`, `Ctrl + Print`) were verified and remain functional. The implementation from Phase 1 continues to work correctly.
+
+**Multimedia:** `mpv` remains the multimedia player for both video and audio, consistent with the project's lightweight philosophy.
+
+The configurations are documented in:
+- `docs/implementation/02-terminal-installation.md`
+- `docs/configuration/dolphin.md`
+- `docs/implementation/10-screenshot-utility.md`
+
+---
+
+### 4.7 — Screen Locker and Idle
 
 * [ ] Review current screen locker behavior and configuration
 * [ ] Evaluate idle timeout settings and lock triggers
@@ -275,19 +301,6 @@ The implementation is documented in `docs/configuration/hyprland.md` under the M
 **Status:** Pending.
 
 The screen locker was installed and configured as part of Phase 1, but its daily-use behavior (timeouts, triggers, integration with power management, and the unlock experience) has not yet been reviewed as a workflow component.
-
----
-
-### 4.7 — Core Applications: Terminal, File Manager, Screenshot
-
-* [ ] Review terminal emulator configuration (profile, keybindings, theme, fonts)
-* [ ] Review file manager configuration (views, keybindings, integration, mounting)
-* [ ] Review screenshot utility configuration (keybindings, capture modes, clipboard integration)
-* [ ] Validate daily-use workflows for these applications
-
-**Status:** Pending.
-
-These applications were installed with minimal configuration in Phase 1. Their daily-use behavior and integration with the Hyprland workflow have not yet been refined.
 
 ---
 
