@@ -33,16 +33,16 @@ This configuration includes:
 * validation of the resulting session workflow.
 * integration with KDE Plasma's Emoji Selector;
 * integration with the terminal-based WhatsApp client;
-* clipboard persistence through `cliphist` for short-lived clipboard producers.
+* clipboard persistence through `cliphist` for short-lived clipboard producers;
 * monitor configuration with explicit scaling and positioning;
 * Fuzzel-based monitor management menu for quick configuration switching;
+* validation of core application integration (Kitty, Dolphin, screenshot utilities);
 
 The configuration does not include:
 
 * replacing Hyprland;
 * replacing Fuzzel;
 * introducing a separate desktop environment;
-* finalizing all mouse and keyboard input behavior;
 * implementing wallpaper management;
 * reorganizing the complete Hyprland configuration into modules.
 
@@ -708,12 +708,13 @@ The resulting Hyprland workflow provides:
 * KDE Plasma Emoji Selector integration with cursor-relative positioning;
 * direct `Super + .` access to the Emoji Selector;
 * terminal-based WhatsApp access through `whatscli`;
-* clipboard persistence through `cliphist` for short-lived clipboard producers.
+* clipboard persistence through `cliphist` for short-lived clipboard producers;
 * persistent clipboard history through a user-level `cliphist` systemd service;
 * explicit monitor configuration with scaling and positioning;
 * Fuzzel-based monitor management menu accessed through `Super + M`;
 * dynamic switching between display configurations without modifying the permanent configuration;
 * no unnecessary profile layer, keeping the configuration simple;
+* core application integration (Kitty, Dolphin, screenshot) validated as part of the daily workflow;
 
 The implementation keeps Hyprland responsible for compositor-level workflow while delegating session and power operations to the appropriate existing system services.
 
@@ -727,7 +728,7 @@ The complete Hyprland configuration has not yet been reorganized into separate L
 
 Scratchpad behavior has not yet been finalized.
 
-Wallpaper management and broader keyboard-driven workflow improvements remain pending.
+Wallpaper management remains pending.
 
 These areas will be addressed independently during the subsequent Phase 4 subphases.
 
