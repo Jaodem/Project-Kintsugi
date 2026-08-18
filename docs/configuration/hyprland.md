@@ -34,6 +34,8 @@ This configuration includes:
 * integration with KDE Plasma's Emoji Selector;
 * integration with the terminal-based WhatsApp client;
 * clipboard persistence through `cliphist` for short-lived clipboard producers.
+* monitor configuration with explicit scaling and positioning;
+* Fuzzel-based monitor management menu for quick configuration switching;
 
 The configuration does not include:
 
@@ -41,7 +43,6 @@ The configuration does not include:
 * replacing Fuzzel;
 * introducing a separate desktop environment;
 * finalizing all mouse and keyboard input behavior;
-* implementing monitor management;
 * implementing wallpaper management;
 * reorganizing the complete Hyprland configuration into modules.
 
@@ -279,7 +280,95 @@ The implementation provides a practical mechanism to switch between focus-follow
 
 This resolves the previously pending mouse input evaluation.
 
+---
 
+## Monitor Configuration
+
+The monitor configuration is explicitly defined in `~/.config/hypr/hyprland.lua` using `hl.monitor()`.
+
+The current configuration is:
+
+```lua
+hl.monitor({
+    output   = "eDP-1",
+    mode     = "preferred",
+    position = "0x0",
+    scale    = 1.25,
+})
+
+hl.monitor({
+    output   = "HDMI-A-1",
+    mode     = "preferred",
+    position = "1536x0",
+    scale    = 1,
+})
+```
+The notebook display (`eDP-1`) uses a scale of `1.25` to improve readability, while the external monitor (`HDMI-A-1`) remains at `1.0`. Both use the preferred mode for their respective resolutions.
+
+The external monitor is positioned to the right of the notebook display (`1536x0`, where `1536` accounts for the scaled width of `eDP-1` at 1920×1080 × 1.25).
+
+### Monitor Management Menu
+A Fuzzel-based menu provides quick access to common monitor configurations.
+
+The script is implemented as:
+
+```text
+~/.config/hypr/scripts/monitor-menu.sh
+```
+
+The menu offers the following options:
+
+```text
+Monitors ›
+Extend — Notebook + monitor
+Notebook only
+Monitor only
+Restore current configuration
+```
+
+The configurations are applied dynamically using `hyprctl eval` and `hl.monitor()`, without permanently modifying the main configuration file.
+
+The available configurations are:
+
+| Option | Notebook (eDP-1) | External monitor (HDMI-A-1) |
+|--------|------------------|-----------------------------|
+| Extend — Notebook + monitor | 1.25, active | 1, active |
+| Notebook only | 1.25, active | disabled |
+| Monitor only | disabled | 1, active |
+| Restore current configuration | 1.25, active | 1, active |
+
+### Keyboard Binding
+
+The monitor menu is invoked through:
+
+```text
+Super + M
+```
+
+The binding is defined in ~/.config/hypr/hyprland.lua as:
+
+```lua
+-- Monitor management menu
+hl.bind(mainMod .. " + M",
+        hl.dsp.exec_cmd("~/.config/hypr/scripts/monitor-menu.sh"))
+```
+
+### Validation
+
+The configuration was validated by:
+
+* verifying that both monitors apply their correct scales and positions using `hyprctl monitors`;
+* switching between all available configurations using the menu;
+* confirming that `hyprctl configerrors` reports no errors after toggling configurations;
+* testing the `Super + M` binding in the active Hyprland session.
+
+### Decision on Profiles
+
+No separate monitor profiles were implemented.
+
+For the current system state, the required configurations are few and fully represented by the menu options. Adding a persistent profile system would introduce unnecessary complexity without addressing a concrete need.
+
+The menu directly applies the desired configuration using Hyprland's runtime evaluation, keeping the permanent configuration simple and the workflow flexible.
 
 ---
 
@@ -621,6 +710,10 @@ The resulting Hyprland workflow provides:
 * terminal-based WhatsApp access through `whatscli`;
 * clipboard persistence through `cliphist` for short-lived clipboard producers.
 * persistent clipboard history through a user-level `cliphist` systemd service;
+* explicit monitor configuration with scaling and positioning;
+* Fuzzel-based monitor management menu accessed through `Super + M`;
+* dynamic switching between display configurations without modifying the permanent configuration;
+* no unnecessary profile layer, keeping the configuration simple;
 
 The implementation keeps Hyprland responsible for compositor-level workflow while delegating session and power operations to the appropriate existing system services.
 
@@ -634,7 +727,7 @@ The complete Hyprland configuration has not yet been reorganized into separate L
 
 Scratchpad behavior has not yet been finalized.
 
-Monitor management, wallpaper management, and broader keyboard-driven workflow improvements remain pending.
+Wallpaper management and broader keyboard-driven workflow improvements remain pending.
 
 These areas will be addressed independently during the subsequent Phase 4 subphases.
 
