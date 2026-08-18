@@ -372,6 +372,157 @@ The menu directly applies the desired configuration using Hyprland's runtime eva
 
 ---
 
+## Window Appearance
+
+The Hyprland window appearance was reviewed and refined during Phase 4.9 with the goal of reducing unnecessary visual space while keeping the interface clean, readable, and visually restrained.
+
+The current appearance configuration is:
+
+```lua
+general = {
+    gaps_in  = 4,
+    gaps_out = 10,
+
+    border_size = 2,
+
+    col = {
+        active_border   = "rgba(780606ff)",
+        inactive_border = "rgba(595959aa)",
+    },
+}
+
+decoration = {
+    rounding       = 10,
+    rounding_power = 2,
+
+    active_opacity   = 1.0,
+    inactive_opacity = 1.0,
+
+    shadow = {
+        enabled      = true,
+        range        = 4,
+        render_power = 3,
+        color        = 0xee1a1a1a,
+    },
+
+    blur = {
+        enabled   = true,
+        size      = 3,
+        passes    = 1,
+        vibrancy  = 0.1696,
+    },
+}
+```
+
+### Gaps
+
+The internal and external gaps were reduced from their previous values to make more efficient use of the available screen area.
+
+The current values are:
+
+```text
+gaps_in  = 4
+gaps_out = 10
+```
+
+The reduced `gaps_out` value provides less unused space between the tiled windows and the edges of the display, while `gaps_in = 4` maintains a small visual separation between adjacent windows.
+
+### Borders
+
+The window border size remains:
+
+```text
+border_size = 2
+```
+
+This provides a clearly visible focus indicator without making the border visually dominant.
+
+The active-window border uses a single accent color rather than the previous cyan/green gradient:
+
+```text
+active_border = #780606
+```
+
+The inactive border remains a neutral gray:
+
+```text
+inactive_border = #595959
+```
+
+The `#780606` color is considered the current Project Kintsugi accent color. Its reuse across other desktop components may be evaluated later as part of the broader desktop-theme work.
+
+No global theme changes are implied by this decision.
+
+### Rounding
+
+Window rounding is set to:
+
+```text
+rounding = 10
+rounding_power = 2
+```
+
+The selected value provides moderately rounded corners without introducing an exaggerated rounded-window appearance.
+
+### Shadows and Blur
+
+Shadows remain enabled with a conservative configuration:
+
+```text
+range        = 4
+render_power = 3
+```
+
+Blur also remains enabled with:
+
+```text
+size      = 3
+passes    = 1
+vibrancy  = 0.1696
+```
+
+The blur configuration already uses a low number of passes and a small blur size, avoiding unnecessary rendering overhead while retaining the visual separation provided by the effect.
+
+Hyprland's current effective configuration also reports:
+
+```text
+
+decoration:blur:new_optimizations = true
+```
+
+The option is currently active through Hyprland's effective defaults and is therefore not duplicated in the project configuration.
+
+No additional performance-oriented reductions were introduced because no concrete performance problem was identified during this appearance review.
+
+Opacity
+
+Both active and inactive windows remain fully opaque:
+
+```text
+active_opacity   = 1.0
+inactive_opacity = 1.0
+```
+
+Transparency was intentionally not introduced as part of this refinement.
+
+### Design Decision
+
+The resulting appearance follows the Project Kintsugi preference for minimal visual complexity:
+
+* reduced gaps to use screen space more efficiently;
+* moderate window rounding;
+* a consistent 2-pixel border;
+* a single dark-red accent for the active window;
+* neutral inactive borders;
+* restrained shadows and blur;
+* no transparency;
+* no additional decorative effects.
+
+The appearance configuration is considered complete for this Phase 4.9 item. Further visual changes should be evaluated independently as part of the broader desktop-theme work rather than added to the window-appearance configuration without a concrete need.
+
+
+---
+
 ## Keyboard-Driven Window Management
 
 Hyprland window management has been extended with dedicated keyboard bindings for focus movement, window movement, floating-window positioning, and window resizing.
