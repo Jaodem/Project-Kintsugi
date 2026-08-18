@@ -329,16 +329,25 @@ This subphase will focus on making notification behavior predictable and consist
 
 ---
 
-### 4.9 — Wallpaper
+### 4.9 — Desktop Appearance
 
-* [ ] Evaluate wallpaper management tools
-* [ ] Select the appropriate wallpaper implementation
-* [ ] Determine whether to use one wallpaper across all monitors or separate wallpapers
-* [ ] Remove the default Hyprland wallpaper permanently
+* [ ] Review and refine Hyprland window appearance (gaps, border size, rounding, shadows)
+* [ ] Evaluate and select a consistent system theme (GTK, Qt, icons, cursors)
+* [ ] Ensure visual consistency across applications and the desktop
+* [ ] Select and configure wallpaper management
+* [ ] Validate the final visual appearance in daily use
 
 **Status:** Pending.
 
-Wallpaper management will be evaluated as a separate desktop-appearance concern rather than being coupled to monitor management.
+The system currently focuses on functionality and integration. Visual consistency has not yet been addressed as a cohesive component.
+
+This phase will refine the desktop appearance, including:
+
+- **Window appearance:** gaps between windows, border size, window rounding, shadows, and other Hyprland decorations.
+- **System themes:** a unified theme for GTK and Qt applications (using Kvantum, qt5ct, or similar), icons, and cursors.
+- **Wallpaper management:** selecting and configuring the wallpaper implementation (to be evaluated as part of this phase).
+
+The objective is a visually coherent and pleasant desktop experience without introducing unnecessary complexity or sacrificing performance.
 
 ---
 
