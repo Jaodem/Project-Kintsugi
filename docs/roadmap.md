@@ -331,23 +331,40 @@ This subphase will focus on making notification behavior predictable and consist
 
 ### 4.9 — Desktop Appearance
 
-* [ ] Review and refine Hyprland window appearance (gaps, border size, rounding, shadows)
+* [x] Review and refine Hyprland window appearance (gaps, border size, rounding, shadows)
 * [ ] Evaluate and select a consistent system theme (GTK, Qt, icons, cursors)
 * [ ] Ensure visual consistency across applications and the desktop
 * [ ] Select and configure wallpaper management
 * [ ] Validate the final visual appearance in daily use
 
-**Status:** Pending.
+**Status:** In progress.
 
-The system currently focuses on functionality and integration. Visual consistency has not yet been addressed as a cohesive component.
+The first window-appearance review has been completed as the initial step of this subphase.
 
-This phase will refine the desktop appearance, including:
+The current Hyprland configuration now uses:
 
-- **Window appearance:** gaps between windows, border size, window rounding, shadows, and other Hyprland decorations.
-- **System themes:** a unified theme for GTK and Qt applications (using Kvantum, qt5ct, or similar), icons, and cursors.
-- **Wallpaper management:** selecting and configuring the wallpaper implementation (to be evaluated as part of this phase).
+- **Gaps:** `gaps_in = 4` and `gaps_out = 10`, reducing the previously excessive space around and between windows while preserving enough separation for visual clarity.
+- **Border size:** `2`, retained as a clear but unobtrusive window boundary.
+- **Rounding:** `10`, retained after testing alternative values and considering the desired minimal visual style.
+- **Active border:** a single muted dark-red accent (`#780606`) replaces the previous cyan/green gradient.
+- **Inactive border:** `rgba(595959aa)`, providing a subdued distinction between focused and unfocused windows.
+- **Shadows:** enabled with a small range and moderate render power.
+- **Blur:** enabled with a minimal configuration (`size = 3`, `passes = 1`) and low vibrancy.
 
-The objective is a visually coherent and pleasant desktop experience without introducing unnecessary complexity or sacrificing performance.
+The appearance was intentionally kept minimal. No additional visual effects or theme layers were introduced during this step.
+
+The active border color was selected as a project visual accent and may be reused for other interface elements in future theme-related work.
+
+Blur and shadow settings were reviewed from the perspective of both appearance and performance. No additional optimization was introduced because the current configuration is already relatively lightweight and the available runtime state does not indicate a need for further changes.
+
+The resulting Hyprland appearance configuration is documented in `docs/configuration/hyprland.md`.
+
+The remaining visual work will be evaluated independently:
+
+- **System themes:** GTK, Qt, icons, and cursors.
+- **Cross-application consistency:** ensuring the selected visual language is applied coherently.
+- **Wallpaper management:** selecting a simple and appropriate wallpaper solution.
+- **Final visual validation:** evaluating the complete appearance after the remaining components have been addressed.
 
 ---
 
