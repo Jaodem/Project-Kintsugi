@@ -226,7 +226,45 @@ The implementation is documented in `docs/configuration/hyprland.md` under the M
 
 ---
 
-### 4.5 — Screen Locker and Idle
+### 4.5 — Monitors
+
+* [x] Resolve monitor scaling definitively
+* [x] Implement a Fuzzel-based monitor management menu
+* [x] Provide convenient access to monitor configuration
+* [x] Determine whether monitor profiles are required
+
+**Status:** Completed.
+
+The monitor configuration is now explicitly defined in `~/.config/hypr/hyprland.lua` using `hl.monitor()`.
+
+The notebook display (`eDP-1`) uses a scale of `1.25` to improve readability, while the external monitor (`HDMI-A-1`) remains at `1.0`. Both use the preferred mode for their respective resolutions.
+
+A Fuzzel-based menu provides quick access to common monitor configurations:
+
+```text
+Monitors ›
+Extend — Notebook + monitor
+Notebook only
+Monitor only
+Restore current configuration
+```
+
+The menu is invoked through Super + M and applies configurations dynamically using hyprctl eval, without permanently modifying the main configuration file.
+
+| Option | Notebook (eDP-1) | External monitor (HDMI-A-1) |
+|--------|------------------|-----------------------------|
+| Extend — Notebook + monitor | 1.25, active | 1, active |
+| Notebook only | 1.25, active | disabled |
+| Monitor only | disabled | 1, active |
+| Restore current configuration | 1.25, active | 1, active |
+
+No separate monitor profiles were implemented. The required configurations are few and fully represented by the menu options.
+
+The implementation is documented in `docs/configuration/hyprland.md` under the Monitor Configuration section.
+
+---
+
+### 4.6 — Screen Locker and Idle
 
 * [ ] Review current screen locker behavior and configuration
 * [ ] Evaluate idle timeout settings and lock triggers
@@ -240,7 +278,7 @@ The screen locker was installed and configured as part of Phase 1, but its daily
 
 ---
 
-### 4.6 — Core Applications: Terminal, File Manager, Screenshot
+### 4.7 — Core Applications: Terminal, File Manager, Screenshot
 
 * [ ] Review terminal emulator configuration (profile, keybindings, theme, fonts)
 * [ ] Review file manager configuration (views, keybindings, integration, mounting)
@@ -253,7 +291,7 @@ These applications were installed with minimal configuration in Phase 1. Their d
 
 ---
 
-### 4.7 — Notifications
+### 4.8 — Notifications
 
 * [ ] Review the current Mako configuration
 * [ ] Correct notification timeout behavior
@@ -263,19 +301,6 @@ These applications were installed with minimal configuration in Phase 1. Their d
 **Status:** Pending.
 
 This subphase will focus on making notification behavior predictable and consistent with the intended desktop workflow.
-
----
-
-### 4.8 — Monitors
-
-* [ ] Resolve monitor scaling definitively at `1.0`
-* [ ] Implement a Fuzzel-based monitor management menu
-* [ ] Provide convenient access to monitor configuration
-* [ ] Determine whether monitor profiles are required
-
-**Status:** Pending.
-
-The objective is to make monitor configuration accessible without introducing unnecessary persistent configuration complexity.
 
 ---
 
