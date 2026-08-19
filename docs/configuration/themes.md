@@ -6,18 +6,21 @@ This document records the system-wide visual theme configuration applied as part
 
 The configuration establishes a consistent visual language across Qt and GTK applications while keeping the implementation compatible with the Hyprland session.
 
-The selected visual style is based on Breeze Dark with a muted dark-red accent.
+The selected visual style is based on Breeze Dark with a dark-red accent and a neutral grayscale palette. The custom KDE color scheme defines the primary application backgrounds, text colors, selection colors, focus decorations, and semantic colors used by KDE applications.
 
 The configuration was applied and validated from within the Hyprland session using KDE System Settings. A Plasma desktop session is therefore not required to configure or maintain the KDE color scheme.
 
 The current configuration focuses on:
 
-* Qt application colors
-* GTK application colors
-* Icon theme
-* Cursor theme
-* Dark application preference
-* Consistent red accent usage
+- Qt application colors
+- GTK application colors
+- KDE color roles and state-specific colors
+- Selection, focus, hover, and active-state colors
+- Tooltip and header colors
+- Icon theme
+- Cursor theme
+- Dark application preference
+- Consistent red accent usage
 
 Wallpaper management and final visual validation remain separate tasks within the Desktop Appearance phase.
 
@@ -53,26 +56,30 @@ This is the same accent selected for the active Hyprland window border.
 
 The visual palette uses the following values:
 
-| Element                |     Color |
-| ---------------------- | --------: |
-| View background        | `#141618` |
-| Alternative background | `#1d1f22` |
-| Window background      | `#202326` |
-| Button background      | `#292c30` |
-| Normal text            | `#fcfcfc` |
-| Inactive text          | `#a1a9b1` |
-| Selection background   | `#780606` |
-| Selection text         | `#fcfcfc` |
-| Link text              | `#a83232` |
-| Visited text           | `#d06464` |
-| Negative text          | `#da4453` |
-| Neutral text           | `#f67400` |
-| Positive text          | `#27ae60` |
-| Focus decoration       | `#780606` |
-| Hover decoration       | `#780606` |
+| Element                 |     Color |
+| ----------------------- | --------: |
+| View background         | `#1a1a1a` |
+| View alternate          | `#242424` |
+| Window background       | `#242424` |
+| Window alternate        | `#2e2e2e` |
+| Button background       | `#2e2e2e` |
+| Button alternate        | `#3a3a3a` |
+| Normal text             | `#f0f0f0` |
+| Inactive text           | `#a0a0a0` |
+| Selection background    | `#780606` |
+| Selection alternate     | `#5c0505` |
+| Selection text          | `#f0f0f0` |
+| Focus decoration        | `#780606` |
+| Hover decoration        | `#9a0a0a` |
+| Selection hover         | `#c04040` |
+| Link text               | `#9a0a0a` |
+| Visited text            | `#a05a5a` |
+| Negative text           | `#da4453` |
+| Neutral text            | `#f67400` |
+| Positive text           | `#27ae60` |
 
 
-The palette intentionally retains distinct semantic colors for negative, neutral, and positive states rather than converting every semantic color to the primary red accent.
+The palette intentionally retains distinct semantic colors for negative, neutral, and positive states rather than converting every semantic color to the primary red accent. The dark-red project accent is primarily used for selections, active states, focus decorations, and hover decorations.
 
 ---
 
@@ -88,14 +95,14 @@ QT_QPA_PLATFORMTHEME=kde
 
 No `QT_STYLE_OVERRIDE` is configured.
 
-This allows KDE-aware Qt applications to use the selected KDE color scheme without introducing an additional Qt theme framework.
+This allows KDE-aware Qt applications to use the selected KDE color scheme without introducing an additional Qt theme framework or overriding the native KDE color handling.
 
 The configuration was validated with KDE applications including:
 
-* Dolphin
-* KWrite
-* Okular
-* KDE System Settings
+- Dolphin
+- KWrite
+- Okular
+- KDE System Settings
 
 These applications correctly reflect the selected dark-red visual language.
 
@@ -120,18 +127,7 @@ gtk-application-prefer-dark-theme=true
 
 GTK applications therefore use the Breeze Dark visual base while the generated color definitions incorporate the project's customized palette.
 
-The GTK configuration uses the same principal colors as the KDE color scheme, including:
-
-```text
-#141618
-#202326
-#292c30
-#780606
-#fcfcfc
-#a1a9b1
-```
-
-This keeps the GTK and Qt visual systems aligned rather than introducing an independent GTK color palette.
+The GTK color configuration is maintained separately from the KDE color scheme. Its exact color definitions are documented independently from the KDE `.colors` file to avoid assuming that both toolkits expose identical color roles.
 
 ---
 
@@ -157,22 +153,22 @@ The corresponding GTK style files are:
 ~/.config/gtk-4.0/gtk.css
 ```
 
-The GTK color definitions provide customized values for:
+The GTK color definitions can provide customized values for:
 
-* Backgrounds
-* Text
-* Buttons
-* Selections
-* Focus decoration
-* Hover decoration
-* Links
-* Visited links
-* Error states
-* Warning states
-* Success states
-* Inactive controls
-* Tooltips
-* Borders
+- Backgrounds
+- Text
+- Buttons
+- Selections
+- Focus decoration
+- Hover decoration
+- Links
+- Visited links
+- Error states
+- Warning states
+- Success states
+- Inactive controls
+- Tooltips
+- Borders
 
 The selection and focus colors use the project's primary dark-red accent rather than the default Breeze blue.
 
@@ -245,24 +241,31 @@ Font selection is treated as part of the existing desktop configuration rather t
 
 ## Configuration Files Touched
 
-KDE Color Scheme
-* `~/.local/share/color-schemes/BreezeDarkRed.colors`
- 
-GTK 2
-* `~/.gtkrc-2.0`
- 
-GTK 3
-* `~/.config/gtk-3.0/settings.ini`
-* `~/.config/gtk-3.0/gtk.css`
-* `~/.config/gtk-3.0/colors.css`
- 
-GTK 4
-* `~/.config/gtk-4.0/settings.ini`
-* `~/.config/gtk-4.0/gtk.css`
-* `~/.config/gtk-4.0/colors.css`
+### KDE Color Scheme
 
-KDE Global Configuration
-* `~/.config/kdeglobals`
+- `~/.local/share/color-schemes/BreezeDarkRed.colors`
+
+The KDE color scheme is the source of truth for the KDE-specific color roles documented in this file.
+
+### GTK 2
+
+- `~/.gtkrc-2.0`
+
+### GTK 3
+
+- `~/.config/gtk-3.0/settings.ini`
+- `~/.config/gtk-3.0/gtk.css`
+- `~/.config/gtk-3.0/colors.css`
+
+### GTK 4
+
+- `~/.config/gtk-4.0/settings.ini`
+- `~/.config/gtk-4.0/gtk.css`
+- `~/.config/gtk-4.0/colors.css`
+
+### KDE Global Configuration
+
+- `~/.config/kdeglobals`
 
 The active KDE color scheme is recorded in `kdeglobals` as:
 
@@ -318,17 +321,26 @@ The project uses:
 
 as its primary visual accent.
 
-The same color is used for:
+A brighter red variant is used for hover and link-related states:
 
-* Hyprland active window borders
-* KDE selection backgrounds
-* KDE focus decoration
-* KDE hover decoration
-* GTK selection backgrounds
-* GTK focus decoration
-* GTK hover decoration
+```text
+#9a0a0a
+```
 
-This provides a consistent relationship between the compositor and application interfaces.
+The primary accent is used for:
+
+- Hyprland active window borders
+- KDE selection backgrounds
+- KDE focus decorations
+- KDE active states
+
+The brighter variant is used for:
+
+- KDE hover decorations
+- KDE link colors
+- Additional visual emphasis where required
+
+This provides a consistent relationship between the compositor and application interfaces while allowing different interaction states to remain visually distinguishable.
 
 ### Semantic Colors
 
@@ -375,16 +387,17 @@ The configuration can therefore be modified or removed without changing system-w
 | Desktop session   | Hyprland                |
 | Qt color scheme   | Breeze Dark Red         |
 | KDE color scheme  | `BreezeDarkRed`         |
-| GTK theme         | `Breeze-Dark`           |
+| GTK theme         | `Breeze-Dark`            |
 | GTK icon theme    | `Breeze Chameleon Dark` |
-| Cursor theme      | `breeze_cursors`        |
-| Cursor size       | `24`                    |
+| Cursor theme      | `breeze_cursors`         |
+| Cursor size       | `24`                     |
 | Primary accent    | `#780606`               |
-| Base text         | `#fcfcfc`               |
-| Inactive text     | `#a1a9b1`               |
-| View background   | `#141618`               |
-| Window background | `#202326`               |
-| Button background | `#292c30`               |
+| Hover accent      | `#9a0a0a`               |
+| Base text         | `#f0f0f0`               |
+| Inactive text     | `#a0a0a0`               |
+| View background   | `#1a1a1a`               |
+| Window background | `#242424`               |
+| Button background | `#2e2e2e`               |
 
 
 ---
@@ -395,23 +408,23 @@ The theme configuration was reviewed from within the Hyprland session.
 
 The following applications were used to verify the visual result:
 
-* Dolphin
-* KWrite
-* Okular
-* Firefox
-* KDE System Settings
+- Dolphin
+- KWrite
+- Okular
+- Firefox
+- KDE System Settings
 
 The following aspects were checked:
 
-* Dark application backgrounds
-* Text contrast
-* Selection colors
-* Focus decorations
-* Hover decorations
-* Link colors
-* Icon appearance
-* Cursor appearance
-* Consistency between Qt and GTK applications
+- Dark application backgrounds
+- Text contrast
+- Selection colors
+- Focus decorations
+- Hover decorations
+- Link colors
+- Icon appearance
+- Cursor appearance
+- Consistency between Qt and GTK applications
 
 Text selection was specifically reviewed because the default Breeze blue selection was visually inconsistent with the project's dark-red accent.
 
@@ -429,22 +442,23 @@ GTK selection colors were also configured to use the same red visual language.
 
 ## Known Limitations
 
-* Applications may implement their own colors and therefore may not fully follow the system theme.
-* Firefox can contain UI elements whose appearance depends on its own toolkit integration and application-specific styling.
-* GTK and Qt do not expose exactly the same set of theme roles, so some visual differences between toolkits may remain.
-* Semantic colors such as positive, negative, and neutral states intentionally remain distinct from the primary project accent.
-* Wallpaper selection and management are not part of this configuration.
-* Final visual validation remains pending until the remaining Desktop Appearance components have been completed.
+- Applications may implement their own colors and therefore may not fully follow the system theme.
+- Firefox can contain UI elements whose appearance depends on its own toolkit integration and application-specific styling.
+- GTK and Qt do not expose exactly the same set of theme roles, so some visual differences between toolkits may remain.
+- Semantic colors such as positive, negative, and neutral states intentionally remain distinct from the primary project accent.
+- Wallpaper selection and management are not part of this configuration.
+- Final visual validation remains pending until the remaining Desktop Appearance components have been completed.
+- Some KDE color roles, particularly inactive header and window-manager states, retain Breeze-derived colors because changing them would not provide a meaningful visual benefit.
 
 ---
 
 ## Notes
 
-* The theme configuration was performed while running Hyprland.
-* KDE System Settings is used as a configuration tool and does not imply that Plasma is the active desktop environment.
-* The system currently contains both KDE and GTK theme configuration, but Hyprland remains the active session.
-* The primary project accent is shared with the Hyprland window border configuration.
-* The custom KDE color scheme is user-local and does not modify the system Breeze theme.
-* GTK 3 and GTK 4 use matching custom color definitions.
-* Icon and cursor configuration is already present and was included in the consistency review.
-* Wallpaper management is intentionally deferred to the remaining Desktop Appearance work.
+- The theme configuration was performed while running Hyprland.
+- KDE System Settings is used as a configuration tool and does not imply that Plasma is the active desktop environment.
+- The system currently contains both KDE and GTK theme configuration, but Hyprland remains the active session.
+- The primary project accent is shared with the Hyprland window border configuration.
+- The custom KDE color scheme is user-local and does not modify the system Breeze theme.
+- GTK 3 and GTK 4 use matching custom color definitions.
+- Icon and cursor configuration is already present and was included in the consistency review.
+- Wallpaper management is intentionally deferred to the remaining Desktop Appearance work.
