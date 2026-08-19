@@ -348,14 +348,14 @@ The resulting Mako configuration is documented in `docs/configuration/mako.md`.
 ### 4.9 — Desktop Appearance
 
 * [x] Review and refine Hyprland window appearance (gaps, border size, rounding, shadows)
-* [ ] Evaluate and select a consistent system theme (GTK, Qt, icons, cursors)
+* [x] Evaluate and select a consistent system theme (GTK, Qt, icons, cursors)
 * [ ] Ensure visual consistency across applications and the desktop
 * [ ] Select and configure wallpaper management
 * [ ] Validate the final visual appearance in daily use
 
 **Status:** In progress.
 
-The first window-appearance review has been completed as the initial step of this subphase.
+The initial window-appearance review and system theme evaluation have been completed as the first steps of this subphase.
 
 The current Hyprland configuration now uses:
 
@@ -367,18 +367,48 @@ The current Hyprland configuration now uses:
 - **Shadows:** enabled with a small range and moderate render power.
 - **Blur:** enabled with a minimal configuration (`size = 3`, `passes = 1`) and low vibrancy.
 
-The appearance was intentionally kept minimal. No additional visual effects or theme layers were introduced during this step.
+The appearance was intentionally kept minimal. No additional visual effects or theme layers were introduced during the window-appearance review.
 
-The active border color was selected as a project visual accent and may be reused for other interface elements in future theme-related work.
+The active border color was selected as the project's primary visual accent and is reused throughout the system theme.
 
-Blur and shadow settings were reviewed from the perspective of both appearance and performance. No additional optimization was introduced because the current configuration is already relatively lightweight and the available runtime state does not indicate a need for further changes.
+### System Theme
 
-The resulting Hyprland appearance configuration is documented in `docs/configuration/hyprland.md`.
+A consistent dark visual theme was selected and applied across the Qt and GTK application layers.
+
+The current visual palette is based on:
+
+- **Primary accent:** `#780606`
+- **View background:** `#141618`
+- **Alternative background:** `#1d1f22`
+- **Window background:** `#202326`
+- **Button background:** `#292c30`
+- **Primary text:** `#fcfcfc`
+- **Inactive text:** `#a1a9b1`
+- **Link text:** `#a83232`
+- **Visited link text:** `#d06464`
+- **Negative:** `#da4453`
+- **Neutral:** `#f67400`
+- **Positive:** `#27ae60`
+
+Qt applications use the customized Breeze dark color scheme, including the project accent for selection, focus, and hover decorations.
+
+GTK 3 and GTK 4 use `Breeze-Dark` with the same project-oriented color palette and dark-red selection and focus colors.
+
+The selected icon theme is `Breeze Chameleon Dark`.
+
+The cursor theme is `breeze_cursors` with a size of `24`.
+
+The resulting theme configuration is documented in `docs/configuration/themes.md`.
+
+KDE System Settings was also validated from within the Hyprland session. This provides a graphical interface for reviewing and modifying the KDE/Qt color configuration without requiring a Plasma desktop session.
+
+The theme was evaluated across applications including Dolphin, KWrite, Okular, Firefox, and KDE System Settings. The previous cyan selection color was identified as a visual inconsistency and replaced with the project dark-red accent where supported.
+
+The current theme configuration is intentionally based on existing Breeze infrastructure rather than introducing a separate GTK or Qt theming framework.
 
 The remaining visual work will be evaluated independently:
 
-- **System themes:** GTK, Qt, icons, and cursors.
-- **Cross-application consistency:** ensuring the selected visual language is applied coherently.
+- **Cross-application consistency:** ensuring the selected visual language is applied coherently across applications and the desktop.
 - **Wallpaper management:** selecting a simple and appropriate wallpaper solution.
 - **Final visual validation:** evaluating the complete appearance after the remaining components have been addressed.
 
