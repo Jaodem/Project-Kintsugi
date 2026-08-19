@@ -349,6 +349,7 @@ The resulting Mako configuration is documented in `docs/configuration/mako.md`.
 
 * [x] Review and refine Hyprland window appearance (gaps, border size, rounding, shadows)
 * [x] Evaluate and select a consistent system theme (GTK, Qt, icons, cursors)
+* [ ] Configure and style Fuzzel to match the system visual theme
 * [ ] Ensure visual consistency across applications and the desktop
 * [x] Select and configure wallpaper management
 * [ ] Validate the final visual appearance in daily use
