@@ -350,7 +350,7 @@ The resulting Mako configuration is documented in `docs/configuration/mako.md`.
 * [x] Review and refine Hyprland window appearance (gaps, border size, rounding, shadows)
 * [x] Evaluate and select a consistent system theme (GTK, Qt, icons, cursors)
 * [ ] Ensure visual consistency across applications and the desktop
-* [ ] Select and configure wallpaper management
+* [x] Select and configure wallpaper management
 * [ ] Validate the final visual appearance in daily use
 
 **Status:** In progress.
@@ -406,10 +406,31 @@ The theme was evaluated across applications including Dolphin, KWrite, Okular, F
 
 The current theme configuration is intentionally based on existing Breeze infrastructure rather than introducing a separate GTK or Qt theming framework.
 
+### Wallpaper Management
+
+Wallpaper management has been implemented using `swaybg` as the wallpaper backend and Fuzzel as the interactive selection interface.
+
+The implementation supports two operating modes:
+
+- one wallpaper shared across both monitors;
+- a different wallpaper for each monitor.
+
+Wallpaper selection is available through `Super + W`.
+
+The active wallpaper configuration is stored separately in `~/.config/hypr/wallpaper.conf`, while dedicated scripts handle wallpaper application and interactive selection.
+
+The wallpaper system is integrated into the Hyprland session startup so that the selected configuration is restored automatically when the session starts.
+
+The resulting implementation is documented in:
+- `docs/wallpaper.md`
+- `docs/wallpaper-selection.md`
+- `docs/implementation/22-wallpaper-management.md`
+- `docs/configuration/wallpaper.md`
+
+
 The remaining visual work will be evaluated independently:
 
 - **Cross-application consistency:** ensuring the selected visual language is applied coherently across applications and the desktop.
-- **Wallpaper management:** selecting a simple and appropriate wallpaper solution.
 - **Final visual validation:** evaluating the complete appearance after the remaining components have been addressed.
 
 ---
