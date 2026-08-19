@@ -318,14 +318,30 @@ Idle and DPMS behavior remain separated from the hyprlock presentation layer. Mo
 
 ### 4.8 — Notifications
 
-* [ ] Review the current Mako configuration
-* [ ] Correct notification timeout behavior
-* [ ] Review notification urgency handling
-* [ ] Remove automatic suspension triggered by critical battery level
+* [x] Review the current Mako configuration
+* [x] Correct notification timeout behavior
+* [x] Review notification urgency handling
+* [x] Remove automatic suspension triggered by critical battery level
 
-**Status:** Pending.
+**Status:** Completed.
 
-This subphase will focus on making notification behavior predictable and consistent with the intended desktop workflow.
+The notification system was reviewed and validated as a workflow component.
+
+Mako is correctly integrated as the notification daemon, providing the `org.freedesktop.Notifications` interface over D-Bus. The urgency-based timeout behavior was validated:
+
+| Urgency | Timeout | Behavior |
+|---------|---------|----------|
+| **Low** | ~3 seconds | Disappears quickly; suitable for non-urgent informational messages. |
+| **Normal** | ~5 seconds | Moderate duration; suitable for standard notifications. |
+| **Critical** | Persistent | Remains visible until dismissed by the user; suitable for important events. |
+
+Critical battery handling was reviewed and delegated to the native infrastructure (UPower and systemd-logind), avoiding custom notification-based power management scripts.
+
+The distinction between notification **generation** (applications/services) and notification **presentation** (Mako) was clearly established and documented.
+
+The investigation also identified that KDE Discover's `DiscoverNotifier` does not start in Hyprland sessions, which is expected behavior. This is not a limitation of Mako but a separate architectural question regarding system update notifications, which will be addressed in future phases.
+
+The resulting Mako configuration is documented in `docs/configuration/mako.md`.
 
 ---
 
