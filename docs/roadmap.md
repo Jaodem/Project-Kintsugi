@@ -435,7 +435,109 @@ Phase 4 follows the project's existing engineering principles:
 
 Improve performance, maintainability, and clarity after the desktop environment has been validated.
 
-Potential areas include:
+This phase focuses on system-level improvements and integration with native Fedora infrastructure, following the same incremental approach used in Phase 4.
+
+---
+
+### 5.1 — System Updates (Investigation)
+
+* [ ] Investigate the current Fedora/DNF5 update infrastructure
+* [ ] Identify available systemd timers and services for update metadata
+* [ ] Determine the least invasive way to check for available updates
+* [ ] Document the DNF5 API and command-line options for update detection
+
+**Status:** Pending.
+
+The objective is to understand what Fedora already provides for update detection and how Kintsugi can integrate with it without reinventing the wheel.
+
+Key areas to investigate:
+- `dnf5 check-update` and its behavior
+- `dnf5-makecache.timer` and other systemd timers
+- PackageKit vs. DNF5 native mechanisms
+- Offline metadata handling
+- Repository cache and network dependency
+
+This investigation will inform the design of the update notification system without assuming a specific implementation yet.
+
+---
+
+### 5.2 — System Updates (Detection and Notification)
+
+* [ ] Implement update detection using the selected mechanism
+* [ ] Integrate detection with a systemd timer for periodic checks
+* [ ] Generate notifications via Mako when updates are available
+* [ ] Distinguish between regular updates and security updates
+
+**Status:** Pending.
+
+Once the investigation is complete, this subphase will implement the actual detection and notification of available updates.
+
+The implementation will:
+- Check for updates periodically (e.g., daily)
+- Use Mako to display notifications when updates are available
+- Provide clear information about the number of updates and their severity
+
+The update notification will be a lightweight integration that does not require network access during session startup.
+
+---
+
+### 5.3 — System Updates (Details and Interaction)
+
+* [ ] Provide a mechanism to view detailed update information
+* [ ] Implement interactive controls to view available updates
+* [ ] Design a simple UX for update management
+
+**Status:** Pending.
+
+This subphase will add the ability to see more details about available updates and interact with the update system.
+
+Potential UX:
+```text
+Updates available
+12 packages, 2 security updates
+
+[ View Details ] [ Ignore ]
+```
+
+The details view could show package names, versions, and changelogs.
+
+---
+
+### 5.4 — System Updates (Execution)
+
+* [ ] Implement update execution with proper privilege handling
+* [ ] Handle transaction confirmation and error reporting
+* [ ] Manage post-update actions (reboot, service restarts)
+
+**Status:** Pending.
+
+This subphase will enable actual package installation from within Kintsugi.
+
+Important considerations:
+
+* `pkexec` or `polkit` for privilege escalation
+* DNF5 transaction reporting
+* Handling of errors, dependencies, and conflicts
+* Kernel updates and reboot requirements
+* Offline updates vs. online updates
+
+This is the most complex part and should be approached carefully.
+
+---
+
+### 5.5 — System Updates (Post-Update and Recovery)
+
+* [ ] Handle post-update notifications (success, failure)
+* [ ] Manage reboot requirements for kernel updates
+* [ ] Implement rollback or recovery mechanisms if applicable
+
+**Status:** Pending.
+
+This subphase will address the aftermath of updates, ensuring the user is informed about the outcome and any necessary actions.
+
+---
+
+### 5.6 — Additional Optimization and Maintenance
 
 * [ ] Review installed packages
 * [ ] Review unnecessary services
@@ -444,9 +546,9 @@ Potential areas include:
 * [ ] Refactor configuration where justified
 * [ ] Review configuration ownership and organization
 
-Optimization should only be performed when there is an identifiable benefit. Complexity should not be introduced for its own sake.
-
 **Status:** Pending evaluation.
+
+Additional optimization tasks not covered by the update subphases. These should only be performed when there is an identifiable benefit. Complexity should not be introduced for its own sake.
 
 ---
 
