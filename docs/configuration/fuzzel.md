@@ -56,7 +56,7 @@ Current configuration:
 
 ```ini
 [main]
-font=JetBrainsMono Nerd Font:weight=bold:size=10
+font=JetBrainsMono Nerd Font:weight=bold:size=12
 terminal=kitty
 
 [colors]
@@ -91,7 +91,7 @@ The primary visual elements are:
 | **Border width** | `2px` |
 | **Border radius** | `10px` |
 | **Font** | `JetBrainsMono Nerd Font` |
-| **Font size** | `10` |
+| **Font size** | `12` |
 | **Font weight** | Bold |
 
 The dark-red accent used for selection and borders is the same primary accent used throughout the Project Kintsugi desktop theme.
