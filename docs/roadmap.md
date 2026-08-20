@@ -486,17 +486,31 @@ The resulting components share the same dark visual foundation and Project Kints
 
 ### 4.10 — Keyboard as the Primary Interface
 
-* [ ] Review existing keyboard bindings
-* [ ] Add useful workflow actions
-* [ ] Evaluate Fuzzel as a command-oriented interaction layer
-* [ ] Review multimedia bindings
-* [ ] Review brightness controls
-* [ ] Review audio controls
-* [ ] Identify additional frequently used keyboard actions
+* [x] Review existing keyboard bindings
+* [x] Add useful workflow actions
+* [x] Evaluate Fuzzel as a command-oriented interaction layer
+* [x] Review multimedia bindings
+* [x] Review brightness controls
+* [x] Review audio controls
+* [x] Identify additional frequently used keyboard actions
 
-**Status:** Pending.
+**Status:** Completed.
 
-This subphase will consolidate the keyboard-driven workflow after the underlying window, input, monitor, and desktop-control behavior has been established.
+This subphase consolidated the keyboard-driven workflow for daily desktop use.
+
+Existing keyboard bindings were reviewed and validated against the actual system configuration. Multimedia controls (`playerctl`), audio controls (`wpctl`), and screen brightness controls (`brightnessctl`) were verified and documented, including specific hardware scancode behavior for the AULA F75 keyboard (`Fn + E` Mac mode requirement).
+
+Fuzzel was confirmed as the unified, command-oriented interaction layer across the session, monitor, wallpaper, and application launchers.
+
+Additional daily workflow bindings were evaluated and implemented:
+
+* `Super + Shift + F`: Toggle fullscreen active window
+* `Super + Shift + C`: Force kill active window
+* `Super + Tab`: Switch to previously active workspace
+
+All bindings were directly tested and validated within the active Hyprland session.
+
+The resulting configuration and hardware interactions are documented in `docs/configuration/hyprland.md`.
 
 ---
 

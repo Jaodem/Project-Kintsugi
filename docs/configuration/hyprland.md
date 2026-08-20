@@ -23,20 +23,23 @@ The configuration is maintained through Lua and dedicated scripts, with system-m
 This configuration includes:
 
 * practical Hyprland keyboard bindings;
+* hardware multimedia, audio, and brightness controls;
 * directional keyboard focus movement;
 * keyboard-based tiled-window movement;
 * precise keyboard-based floating-window movement;
 * keyboard-based window resizing;
+* workspace navigation;
+* fullscreen window management and force-kill operations;
 * session management through a dedicated session menu;
 * integration with Fuzzel for interactive session controls;
 * separation of Hyprland-specific scripts from Waybar scripts;
-* validation of the resulting session workflow.
+* validation of the resulting session workflow;
 * integration with KDE Plasma's Emoji Selector;
 * integration with the terminal-based WhatsApp client;
 * clipboard persistence through `cliphist` for short-lived clipboard producers;
 * monitor configuration with explicit scaling and positioning;
 * Fuzzel-based monitor management menu for quick configuration switching;
-* validation of core application integration (Kitty, Dolphin, screenshot utilities);
+* validation of core application integration (Kitty, Dolphin, screenshot utilities).
 
 The configuration does not include:
 
@@ -533,21 +536,55 @@ The bindings are defined in:
 ~/.config/hypr/hyprland.lua
 ```
 
-The current keyboard workflow is:
+The current keyboard workflow relies on the `Super` modifier:
 
 ```text
 Super + Arrow
-    Move focus between windows
+    Move focus between adjacent windows
 
 Super + Shift + Arrow
     Move the active window within the Hyprland layout
 
 Super + Alt + Arrow
-    Move a floating window precisely
+    Move a floating window precisely (relative coordinates)
 
 Super + Ctrl + Arrow
-    Resize the active window precisely
+    Resize the active window precisely (relative coordinates)
+
+Super + Shift + F
+    Toggle the fullscreen state of the active window
+
+Super + Shift + C
+    Force kill the active window (process termination)
 ```
+
+## Hardware and Multimedia Controls
+
+The desktop integrates natively with the underlying hardware for media, volume, and brightness adjustments. No additional daemon is required; Hyprland keybindings interface directly with standard command-line utilities.
+
+### Audio and Media Playback
+
+Volume is managed through PipeWire and WirePlumber via `wpctl`. Playback is managed via `playerctl`.
+
+```text
+XF86AudioRaiseVolume  → wpctl set-volume (5%+)
+XF86AudioLowerVolume  → wpctl set-volume (5%-)
+XF86AudioMute         → wpctl set-mute toggle
+XF86AudioPlay         → playerctl play-pause
+XF86AudioNext         → playerctl next
+XF86AudioPrev         → playerctl previous
+```
+
+### Screen Brightness
+
+Screen brightness is controlled via brightnessctl, interfacing directly with the intel_backlight device.
+
+```text
+XF86MonBrightnessUp   → brightnessctl set 5%+
+XF86MonBrightnessDown → brightnessctl set 5%-
+```
+
+Hardware Note (AULA F75): The AULA F75 keyboard must be set to Mac mode (Fn + E) to properly emit the brightness scancodes under Wayland. In Windows mode, these specific signals are intercepted or not sent correctly.
 
 ## Emoji Selector
 
@@ -729,21 +766,24 @@ The `relative = true` parameter is required for these bindings because the value
 
 ### Floating Window Mode
 
-The existing:
+The `Super + V` binding toggles the focused window between tiled and floating mode. This allows the precise `Super + Alt + Arrow` movement workflow to be used.
+
+### Workspace Navigation
+
+Workspaces are managed using numeric keys and quick-switching bindings:
 
 ```text
-Super + V
+Super + [0-9]
+    Switch to the specified workspace
+
+Super + Shift + [0-9]
+    Move the active window to the specified workspace
+
+Super + Tab
+    Switch immediately to the previously active workspace
 ```
 
-binding toggles the focused window between tiled and floating mode:
-
-```text
-hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
-```
-
-This allows the precise `Super + Alt + Arrow` movement workflow to be used when a window is floating.
-
-The same floating state can also be resized using the `Super + Ctrl + Arrow` bindings.
+The Super + Tab functionality allows rapid bidirectional context switching between the current and the last used workspace.
 
 ---
 
