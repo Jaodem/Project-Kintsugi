@@ -367,11 +367,11 @@ The resulting Mako configuration is documented in `docs/configuration/mako.md`.
 * [x] Review and refine Hyprland window appearance (gaps, border size, rounding, shadows)
 * [x] Evaluate and select a consistent system theme (GTK, Qt, icons, cursors)
 * [x] Configure and style Fuzzel to match the system visual theme
-* [ ] Ensure visual consistency across applications and the desktop
+* [x] Ensure visual consistency across applications and the desktop
 * [x] Select and configure wallpaper management
-* [ ] Validate the final visual appearance in daily use
+* [x] Validate the final visual appearance in daily use
 
-**Status:** In progress.
+**Status:** Completed.
 
 The initial window-appearance review and system theme evaluation have been completed as the first steps of this subphase.
 
@@ -445,10 +445,42 @@ This allows the session, monitor, wallpaper, Wi-Fi, Bluetooth, and power-profile
 
 The resulting Fuzzel configuration is stored in `~/.config/fuzzel/fuzzel.ini`.
 
+### Waybar
+
+Waybar was configured to match the Project Kintsugi visual theme.
+
+The final Waybar styling uses:
+
+- **Bar background:** transparent
+- **Module background:** `rgba(30, 30, 30, 0.90)`
+- **Primary text:** `#ffffff`
+- **Font:** `JetBrainsMono Nerd Font`, with `Noto Sans` as fallback
+- **Module rounding:** `8px`
+- **Module spacing:** `2px 1px` margins with `1px 7px` padding
+- **Tooltip accent:** `#780606`
+
+The modules intentionally remain borderless to preserve the previously established minimal appearance.
+
+Tooltips use the project dark-red accent as their border, providing visual consistency with the Hyprland active border and Fuzzel selection and border colors without adding borders to the regular Waybar modules.
+
+Battery states retain dedicated semantic colors for charging, warning, and critical conditions.
+
+The resulting Waybar configuration is stored in:
+
+```text
+~/.config/waybar/config.jsonc
+~/.config/waybar/style.css
+```
+
+This completes the visual integration of Waybar with the rest of the desktop environment.
+
 ### Wallpaper Management
 
 Wallpaper management has been implemented using `swaybg` as the wallpaper backend and Fuzzel as the interactive selection interface.
 
+The final desktop appearance was validated across the configured Hyprland session, Qt and GTK applications, Fuzzel, Waybar, KDE System Settings, and the configured wallpapers.
+
+The resulting components share the same dark visual foundation and Project Kintsugi dark-red accent while retaining their native toolkit and application behavior.
 
 ---
 

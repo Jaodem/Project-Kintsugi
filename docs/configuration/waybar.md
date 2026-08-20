@@ -403,6 +403,26 @@ The visual design uses compact modules with:
 
 The styling is intentionally shared across modules rather than introducing individual visual systems for each component.
 
+Waybar tooltips use the Kintsugi accent palette, with a dark background, light text, rounded corners, and a red accent border:
+
+```text
+tooltip {
+    background: #292c30;
+    color: #fcfcfc;
+    border: 1px solid #780606;
+    border-radius: 8px;
+    padding: 6px 9px;
+}
+
+tooltip label {
+    color: #fcfcfc;
+}
+```
+
+The tooltip accent uses `#780606`, matching the red accent defined by the `BreezeDarkRed` KDE color scheme.
+
+No borders are applied to the regular Waybar modules.
+
 ---
 
 ## Script Design
