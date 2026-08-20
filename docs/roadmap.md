@@ -322,6 +322,7 @@ Idle and DPMS behavior remain separated from the hyprlock presentation layer. Mo
 * [x] Correct notification timeout behavior
 * [x] Review notification urgency handling
 * [x] Remove automatic suspension triggered by critical battery level
+* [x] Align Mako visual appearance with the Project Kintsugi theme
 
 **Status:** Completed.
 
@@ -335,6 +336,21 @@ Mako is correctly integrated as the notification daemon, providing the `org.free
 | **Normal** | ~5 seconds | Moderate duration; suitable for standard notifications. |
 | **Critical** | Persistent | Remains visible until dismissed by the user; suitable for important events. |
 
+Mako's visual appearance was aligned with the Project Kintsugi visual theme.
+
+The notification presentation reuses the existing project palette rather than introducing notification-specific colors:
+
+- **Background:** `#1A1A1A`
+- **Primary text:** `#F0F0F0`
+- **Primary accent:** `#780606`
+- **Critical accent:** `#DA4453`
+
+The notification border uses the same `2px` size and `10px` rounding established for Hyprland window presentation. The notification font uses `JetBrainsMono Nerd Font`, consistent with the primary desktop interface.
+
+Normal notifications use the project accent, while critical notifications use the project's negative semantic color. Low-priority notifications retain the same visual identity and differ primarily through their shorter timeout.
+
+No separate notification theme or additional theming layer was introduced.
+
 Critical battery handling was reviewed and delegated to the native infrastructure (UPower and systemd-logind), avoiding custom notification-based power management scripts.
 
 The distinction between notification **generation** (applications/services) and notification **presentation** (Mako) was clearly established and documented.
@@ -342,6 +358,7 @@ The distinction between notification **generation** (applications/services) and 
 The investigation also identified that KDE Discover's `DiscoverNotifier` does not start in Hyprland sessions, which is expected behavior. This is not a limitation of Mako but a separate architectural question regarding system update notifications, which will be addressed in future phases.
 
 The resulting Mako configuration is documented in `docs/configuration/mako.md`.
+
 
 ---
 
