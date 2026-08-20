@@ -366,7 +366,7 @@ The resulting Mako configuration is documented in `docs/configuration/mako.md`.
 
 * [x] Review and refine Hyprland window appearance (gaps, border size, rounding, shadows)
 * [x] Evaluate and select a consistent system theme (GTK, Qt, icons, cursors)
-* [ ] Configure and style Fuzzel to match the system visual theme
+* [x] Configure and style Fuzzel to match the system visual theme
 * [ ] Ensure visual consistency across applications and the desktop
 * [x] Select and configure wallpaper management
 * [ ] Validate the final visual appearance in daily use
@@ -424,32 +424,31 @@ The theme was evaluated across applications including Dolphin, KWrite, Okular, F
 
 The current theme configuration is intentionally based on existing Breeze infrastructure rather than introducing a separate GTK or Qt theming framework.
 
+### Fuzzel
+
+Fuzzel was configured to match the Project Kintsugi visual theme.
+
+The global Fuzzel configuration uses the existing project palette:
+
+- **Background:** `#1A1A1A`
+- **Primary text:** `#F0F0F0`
+- **Match:** `#9A0A0A`
+- **Selection:** `#780606`
+- **Selection text:** `#FFFFFF`
+- **Border:** `#780606`
+
+The configuration uses `JetBrainsMono Nerd Font`, with a `2px` border and `10px` rounding to maintain consistency with the Hyprland and Mako presentation.
+
+The visual configuration is applied globally to Fuzzel while individual scripts retain responsibility for workflow-specific properties such as width, number of lines, position, margins, and prompts.
+
+This allows the session, monitor, wallpaper, Wi-Fi, Bluetooth, and power-profile menus to share the same visual language without introducing duplicated styling configuration.
+
+The resulting Fuzzel configuration is stored in `~/.config/fuzzel/fuzzel.ini`.
+
 ### Wallpaper Management
 
 Wallpaper management has been implemented using `swaybg` as the wallpaper backend and Fuzzel as the interactive selection interface.
 
-The implementation supports two operating modes:
-
-- one wallpaper shared across both monitors;
-- a different wallpaper for each monitor.
-
-Wallpaper selection is available through `Super + W`.
-
-The active wallpaper configuration is stored separately in `~/.config/hypr/wallpaper.conf`, while dedicated scripts handle wallpaper application and interactive selection.
-
-The wallpaper system is integrated into the Hyprland session startup so that the selected configuration is restored automatically when the session starts.
-
-The resulting implementation is documented in:
-- `docs/wallpaper.md`
-- `docs/wallpaper-selection.md`
-- `docs/implementation/22-wallpaper-management.md`
-- `docs/configuration/wallpaper.md`
-
-
-The remaining visual work will be evaluated independently:
-
-- **Cross-application consistency:** ensuring the selected visual language is applied coherently across applications and the desktop.
-- **Final visual validation:** evaluating the complete appearance after the remaining components have been addressed.
 
 ---
 
