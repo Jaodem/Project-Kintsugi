@@ -55,40 +55,38 @@ Those areas are part of the subsequent Phase 4 workflow.
 
 ## Configuration Structure
 
-The main Hyprland configuration is:
+The Hyprland configuration follows a modular architecture using native Lua `require()` modules. 
 
-```text
-~/.config/hypr/hyprland.lua
-```
-
-Hyprland-specific workflow scripts are stored separately from Waybar scripts:
+The main entrypoint is minimal and strictly delegates responsibilities to dedicated module files:
 
 ```text
 ~/.config/hypr/
-├── hyprland.lua
+├── hyprland.lua              # Main entrypoint (module loader)
+├── modules/
+│   ├── appearance.lua        # Layouts, borders, gaps, curves, animations
+│   ├── autostart.lua         # Startup processes (waybar, wallpaper daemon)
+│   ├── env.lua               # Environment variables (cursors, themes)
+│   ├── input.lua             # Keyboard layouts, mouse sensitivity, touchpad, gestures
+│   ├── keybindings.lua       # Keybindings, window actions, media controls
+│   ├── monitors.lua          # Monitor resolutions, scaling, positioning
+│   └── rules.lua             # Window rules, float assignments, layer rules
 └── scripts/
-    └── session-menu.sh
+    ├── emoji-selector.sh
+    ├── monitor-menu.sh
+    ├── session-menu.sh
+    ├── toggle-follow-mouse.sh
+    ├── wallpaper-menu.sh
+    ├── wallpaper.sh
+    └── hyprlock/
+        ├── battery-status.sh
+        ├── media-next.sh
+        ├── media-playpause.sh
+        ├── media-prev.sh
+        ├── media-state.sh
+        └── media-status.sh
 ```
 
-This separation reflects the responsibility of each component.
-
-Scripts under:
-
-```text
-~/.config/hypr/scripts/
-```
-
-are intended to support the Hyprland session itself.
-
-Scripts under:
-
-```text
-~/.config/waybar/scripts/
-```
-
-remain responsible for functionality initiated specifically through Waybar.
-
-This prevents compositor-level workflow functionality from becoming dependent on the status bar.
+Scripts supporting the graphical session reside under `~/.config/hypr/scripts/`, while specialized scripts supporting the screen lock interface are isolated under `~/.config/hypr/scripts/hyprlock/`.
 
 ---
 

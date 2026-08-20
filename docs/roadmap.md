@@ -516,15 +516,17 @@ The resulting configuration and hardware interactions are documented in `docs/co
 
 ### 4.11 — Organization
 
-* [ ] Separate the Hyprland Lua configuration into modules
-* [ ] Organize Hyprland-specific scripts
-* [ ] Document keyboard bindings
-* [ ] Review configuration ownership
-* [ ] Leave the configuration in a maintainable final structure
+* [x] Separate the Hyprland Lua configuration into modules
+* [x] Organize Hyprland-specific scripts
+* [x] Document keyboard bindings
+* [x] Review configuration ownership
+* [x] Leave the configuration in a maintainable final structure
 
-**Status:** Pending.
+**Status:** Completed.
 
-Configuration reorganization will be performed after the workflow has stabilized so that the module structure reflects the actual responsibilities of the final configuration rather than an assumed architecture.
+The Hyprland configuration was refactored into a clean, modular Lua structure. Responsibilities were split into dedicated modules (`monitors`, `autostart`, `env`, `appearance`, `input`, `rules`, `keybindings`), reducing `hyprland.lua` to a concise entrypoint loader.
+
+Scripts under `~/.config/hypr/scripts/` were reviewed and organized by ownership. Scripts supporting the `hyprlock` screen locker were grouped into a dedicated `hyprlock/` subdirectory, ensuring clear separation between compositor workflows and lock screen presentation tools.
 
 ---
 

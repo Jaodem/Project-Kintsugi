@@ -98,15 +98,15 @@ For example, a future return to a YouTube Music wrapper based on Brave can use t
 
 ### Battery
 
-* `~/.config/hypr/scripts/battery-status.sh`
+* `~/.config/hypr/scripts/hyprlock/battery-status.sh`
 
 ### Multimedia
 
-* `~/.config/hypr/scripts/media-status.sh`
-* `~/.config/hypr/scripts/media-state.sh`
-* `~/.config/hypr/scripts/media-prev.sh`
-* `~/.config/hypr/scripts/media-playpause.sh`
-* `~/.config/hypr/scripts/media-next.sh`
+* `~/.config/hypr/scripts/hyprlock/media-status.sh`
+* `~/.config/hypr/scripts/hyprlock/media-state.sh`
+* `~/.config/hypr/scripts/hyprlock/media-prev.sh`
+* `~/.config/hypr/scripts/hyprlock/media-playpause.sh`
+* `~/.config/hypr/scripts/hyprlock/media-next.sh`
 
 ---
 
