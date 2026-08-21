@@ -2,21 +2,19 @@
 
 ## Objective
 
-The objective of this implementation was to establish an automated, non-blocking system update notification mechanism for the Project Kintsugi Wayland session.
+The objective of this implementation was to establish an automated, non-blocking system update notification mechanism, paired with an interactive, transparent execution and maintenance workflow for the Project Kintsugi Wayland session.
 
-The implementation detects available system packages, security patches, and Flatpak updates without requiring network access during execution.
-
-The solution operates independently of KDE Plasma's PackageKit backend and avoids introducing persistent background daemons.
+The solution operates independently of KDE Plasma's PackageKit backend, relying instead on native terminal execution and background caching.
 
 ---
 
 ## Background
 
-Project Kintsugi requires a lightweight method to notify the user of pending updates.
+Project Kintsugi requires a lightweight method to handle system updates while maintaining absolute user control over package transactions.
 
-Previous investigation (Phase 5.1) confirmed that Fedora's native `dnf-makecache.timer` handles background repository synchronization effectively.
+Previous investigation (Phase 5.1) confirmed that Fedora's native `dnf-makecache.timer` handles background repository synchronization effectively. Therefore, detection is performed offline.
 
-The implementation therefore focuses exclusively on querying the local DNF5 and Flatpak caches and passing the results to the Mako notification daemon.
+Furthermore, standard desktop environments typically abstract update execution through graphical package managers, which obscure transaction details and error reporting. To align with the project's philosophy of transparency, it was determined that the execution must remain within a standard terminal emulator, exposing native `sudo` prompts and DNF5 outputs.
 
 Firmware updates are explicitly excluded from this implementation and remain delegated to KDE Discover.
 
@@ -26,123 +24,79 @@ Firmware updates are explicitly excluded from this implementation and remain del
 
 This implementation included:
 
-- creation of the update detection bash script;
-- integration with DNF5 local cache;
-- integration with Flatpak remote-ls;
+- integration with DNF5 and Flatpak local caches;
 - separation of security and standard packages;
-- integration with Mako via `notify-send`;
-- creation of a systemd user service;
-- creation of a systemd user timer;
-- validation of the script and notification rendering;
-- validation of the systemd timer scheduling.
+- automated update detection via a `systemd --user` timer;
+- non-blocking notifications via Mako;
+- interactive notification mapping (left-click action);
+- detailed package visualization using Fuzzel;
+- native execution environment via Kitty;
+- interactive execution of `dnf5 upgrade` and `flatpak update`;
+- automated post-update maintenance and cleanup.
 
-The implementation did not include:
+The implementation explicitly excluded:
 
-- a graphical user interface for update management;
-- automatic installation of updates;
-- firmware (fwupd) integration;
-- modifications to PackageKit.
-
----
-
-## Update Detection Script
-
-The detection logic was implemented in a dedicated bash script located at:
-
-```text
-~/.config/hypr/scripts/check-updates.sh
-```
-
-The script performs the following operations:
-
-1. Queries the local DNF5 cache for security updates.
-2. Queries the local DNF5 cache for all standard updates.
-3. Queries Flatpak for pending application updates.
-4. Calculates the total number of updates.
-5. Constructs a formatted notification message.
-6. Triggers `notify-send` if updates are available.
-
-The DNF5 queries use the `-C` (cache-only) and `--quiet` flags to ensure rapid, offline execution. Text parsing is handled through strict architecture extensions to avoid DNF5 header interference.
+- graphical user interfaces for package installation (e.g., Polkit GUI);
+- background silent installations;
+- firmware (fwupd) integration.
 
 ---
 
-## Notification Integration
+## Implementation
 
-The script sends the formatted summary to the Mako notification daemon.
+The complete update lifecycle is handled by a single shell script (`~/.config/hypr/scripts/check-updates.sh`), scheduled via systemd.
 
-Notification urgency is handled dynamically:
+### 1. Detection and Notification
 
-- If security patches are detected, the notification urgency is set to `critical`.
-- If only standard or Flatpak updates are detected, the urgency is set to `normal`.
+The script queries the local DNF5 cache (`-C`) and Flatpak for pending updates, calculating totals for security patches, standard packages, and applications. 
 
-This ensures that critical security updates are visually highlighted by the notification daemon.
+Execution is scheduled via a systemd timer (`kintsugi-updates.timer`), set to trigger 10 minutes after boot and every 24 hours thereafter.
 
----
+If updates are found, the script sends a formatted message to Mako using `notify-send`. If security patches are detected, the notification urgency is elevated to `critical`.
 
-## Systemd Automation
+### 2. Visual Interaction (Fuzzel)
 
-Execution is automated through systemd `--user`, ensuring the script runs in the background without tying up a terminal or the Hyprland configuration.
+The script pauses execution (`--wait`) to monitor user interaction with the notification. 
 
-### Service Definition
+When the user left-clicks the notification, the script intercepts the `default` action and pipes the detailed update list (Security, System, and Flatpak sections) into Fuzzel. Fuzzel displays the list as an interactive, read-only menu anchored to the top-right corner.
 
-A systemd oneshot service was created at:
+### 3. Execution Environment (Kitty)
 
-```text
-~/.config/systemd/user/kintsugi-updates.service
-```
+An explicit execution trigger (`>>> INSTALL ALL UPDATES <<<`) is injected at the top of the Fuzzel menu. If selected, Fuzzel terminates and spawns a floating Kitty terminal window.
 
-The service is responsible for executing the bash script.
+The terminal handles the upgrade execution:
+1. `sudo dnf5 upgrade` is called natively, utilizing the standard terminal password prompt.
+2. `flatpak update` is executed at the user level.
 
-### Timer Definition
+### 4. Automated Maintenance
 
-A systemd timer was created at:
+To fulfill system optimization requirements, routine maintenance commands are appended directly to the execution sequence. Post-update, the system automatically performs:
 
-```text
-~/.config/systemd/user/kintsugi-updates.timer
-```
+- `sudo dnf5 autoremove -y`
+- `flatpak uninstall --unused -y`
+- `sudo dnf5 clean packages` (clearing RPM installers without destroying repository metadata)
+- `sudo journalctl --vacuum-size=100M`
 
-The timer schedules the execution of the service:
-
-- 10 minutes after the graphical session starts (OnBootSec=10min).
-- Every 24 hours while the session remains active (OnUnitActiveSec=24h).
-
-This scheduling avoids placing unnecessary load on the system during the initial Hyprland boot sequence.
+The terminal pauses upon completion (`read -p`), allowing the user to audit the transaction history before manually closing the window.
 
 ---
 
 ## Validation
 
-The implementation was validated incrementally in the live environment.
+The implementation was validated manually in the live environment:
 
-### Script Execution
-
-The script was executed manually from the terminal.
-
-The resulting notification successfully displayed:
-
-- The correct total count of cached updates.
-- The correct categorization of security patches versus standard packages.
-- The critical urgency border applied by Mako due to the presence of security patches.
-
-### Systemd Integration
-
-The systemd components were validated by reloading the user daemon and enabling the timer.
-
-The scheduling was confirmed using:
-
-```text
-systemctl --user list-timers --all
-```
-
-The output verified that the `kintsugi-updates.timer` was active, linked correctly within the `timers.target.wants` directory, and successfully completed its initial execution.
+- The systemd timer (`list-timers`) scheduled the script correctly without impacting initial boot performance.
+- Mako displayed the correct update counts and severity indicators.
+- Left-clicking the notification successfully launched the Fuzzel details menu.
+- Selecting the install trigger successfully spawned Kitty.
+- Terminal authentication (`sudo`) functioned natively.
+- Package transactions and automated maintenance executed sequentially and successfully.
+- The terminal window persisted until explicitly dismissed by the user.
 
 ---
 
 ## Conclusion
-The system updates notification mechanism has been successfully implemented as an independent Project Kintsugi component.
 
-A shell script handles the local cache querying, while systemd manages the execution scheduling.
+The system updates mechanism is fully implemented.
 
-The resulting system provides accurate, offline-capable update notifications without introducing unnecessary dependencies on KDE Plasma or blocking the Wayland session.
-
-The component is therefore considered complete for the detection and notification phase.
+By combining offline caching, asynchronous Mako notifications, Fuzzel for elegant data visualization, and Kitty for robust transaction handling, Project Kintsugi provides a highly capable update system that respects user control and automates system hygiene.
