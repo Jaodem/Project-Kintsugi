@@ -689,11 +689,11 @@ This subphase focuses on extracting live system configurations into a version-co
 
 ### 6.2 — Dependency Tracking
 
-* [ ] Generate a definitive Bill of Materials (BOM) for system packages (DNF5)
-* [ ] Generate a BOM for user applications (Flatpak)
-* [ ] Document external dependencies (custom fonts, themes, manual binaries)
+* [x] Generate a definitive Bill of Materials (BOM) for system packages (DNF5)
+* [x] Generate a BOM for user applications (Flatpak)
+* [x] Document external dependencies (custom fonts, themes, manual binaries)
 
-**Status:** Pending.
+**Status:** Completed.
 
 To reproduce the system, the exact required packages must be known and separated from transient or orphaned dependencies.
 
