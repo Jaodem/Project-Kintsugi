@@ -75,6 +75,7 @@ To fulfill system optimization requirements, routine maintenance commands are ap
 - `sudo dnf5 autoremove -y`
 - `flatpak uninstall --unused -y`
 - `sudo dnf5 clean packages` (clearing RPM installers without destroying repository metadata)
+- `sudo rm -rf /var/tmp/flatpak-cache-*` and `rm -rf ~/.cache/thumbnails/*` (clearing temporary installation caches and stale image thumbnails)
 - `sudo journalctl --vacuum-size=100M`
 
 The terminal pauses upon completion (`read -p`), allowing the user to audit the transaction history before manually closing the window.
