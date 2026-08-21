@@ -359,7 +359,6 @@ The investigation also identified that KDE Discover's `DiscoverNotifier` does no
 
 The resulting Mako configuration is documented in `docs/configuration/mako.md`.
 
-
 ---
 
 ### 4.9 — Desktop Appearance
@@ -557,12 +556,12 @@ This phase focuses on system-level improvements and integration with native Fedo
 
 ### 5.1 — System Updates (Investigation)
 
-* [ ] Investigate the current Fedora/DNF5 update infrastructure
-* [ ] Identify available systemd timers and services for update metadata
-* [ ] Determine the least invasive way to check for available updates
-* [ ] Document the DNF5 API and command-line options for update detection
+* [x] Investigate the current Fedora/DNF5 update infrastructure
+* [x] Identify available systemd timers and services for update metadata
+* [x] Determine the least invasive way to check for available updates
+* [x] Document the DNF5 API and command-line options for update detection
 
-**Status:** Pending.
+**Status:** Completed.
 
 The objective is to understand what Fedora already provides for update detection and how Kintsugi can integrate with it without reinventing the wheel.
 
@@ -579,12 +578,12 @@ This investigation will inform the design of the update notification system with
 
 ### 5.2 — System Updates (Detection and Notification)
 
-* [ ] Implement update detection using the selected mechanism
-* [ ] Integrate detection with a systemd timer for periodic checks
-* [ ] Generate notifications via Mako when updates are available
-* [ ] Distinguish between regular updates and security updates
+* [x] Implement update detection using the selected mechanism
+* [x] Integrate detection with a systemd timer for periodic checks
+* [x] Generate notifications via Mako when updates are available
+* [x] Distinguish between regular updates and security updates
 
-**Status:** Pending.
+**Status:** Completed.
 
 Once the investigation is complete, this subphase will implement the actual detection and notification of available updates.
 
@@ -599,11 +598,11 @@ The update notification will be a lightweight integration that does not require 
 
 ### 5.3 — System Updates (Details and Interaction)
 
-* [ ] Provide a mechanism to view detailed update information
-* [ ] Implement interactive controls to view available updates
-* [ ] Design a simple UX for update management
+* [x] Provide a mechanism to view detailed update information
+* [x] Implement interactive controls to view available updates
+* [x] Design a simple UX for update management
 
-**Status:** Pending.
+**Status:** Completed.
 
 This subphase will add the ability to see more details about available updates and interact with the update system.
 
@@ -621,50 +620,50 @@ The details view could show package names, versions, and changelogs.
 
 ### 5.4 — System Updates (Execution)
 
-* [ ] Implement update execution with proper privilege handling
-* [ ] Handle transaction confirmation and error reporting
-* [ ] Manage post-update actions (reboot, service restarts)
+* [x] Implement update execution with proper privilege handling
+* [x] Handle transaction confirmation and error reporting
+* [x] Manage post-update actions (reboot, service restarts)
 
-**Status:** Pending.
+**Status:** Completed.
 
 This subphase will enable actual package installation from within Kintsugi.
 
 Important considerations:
 
-* `pkexec` or `polkit` for privilege escalation
-* DNF5 transaction reporting
-* Handling of errors, dependencies, and conflicts
-* Kernel updates and reboot requirements
+* `pkexec` or `polkit` for privilege escalation (Resolved via native `sudo` in Kitty)
+* DNF5 transaction reporting (Resolved via interactive terminal)
+* Handling of errors, dependencies, and conflicts (Delegated to DNF5 interactive prompts)
+* Kernel updates and reboot requirements (Delegated to standard terminal output)
 * Offline updates vs. online updates
 
-This is the most complex part and should be approached carefully.
+This is the most complex part and was approached by keeping the execution transparent within a terminal emulator.
 
 ---
 
 ### 5.5 — System Updates (Post-Update and Recovery)
 
-* [ ] Handle post-update notifications (success, failure)
-* [ ] Manage reboot requirements for kernel updates
-* [ ] Implement rollback or recovery mechanisms if applicable
+* [x] Handle post-update notifications (success, failure)
+* [x] Manage reboot requirements for kernel updates
+* [x] Implement rollback or recovery mechanisms if applicable
 
-**Status:** Pending.
+**Status:** Completed.
 
-This subphase will address the aftermath of updates, ensuring the user is informed about the outcome and any necessary actions.
+This subphase addresses the aftermath of updates. By holding the execution terminal open upon completion, the user is natively informed about the outcome, any necessary service restarts, or kernel reboots required by the system, avoiding unnecessary abstraction layers.
 
 ---
 
 ### 5.6 — Additional Optimization and Maintenance
 
-* [ ] Review installed packages
-* [ ] Review unnecessary services
-* [ ] Identify repetitive manual tasks
-* [ ] Evaluate automation opportunities
-* [ ] Refactor configuration where justified
-* [ ] Review configuration ownership and organization
+* [x] Review installed packages
+* [x] Review unnecessary services
+* [x] Identify repetitive manual tasks
+* [x] Evaluate automation opportunities
+* [x] Refactor configuration where justified
+* [x] Review configuration ownership and organization
 
-**Status:** Pending evaluation.
+**Status:** Completed.
 
-Additional optimization tasks not covered by the update subphases. These should only be performed when there is an identifiable benefit. Complexity should not be introduced for its own sake.
+Additional optimization tasks not covered by the update subphases. Automated post-update cleanup (cache removal, log vacuuming, and flatpak maintenance) has been integrated into the update execution flow. Furthermore, a deep system audit was conducted to disable unnecessary systemd services (telemetry, virtualization agents, unused network managers) and remove obsolete or redundant packages, ensuring a lean and performant base system.
 
 ---
 
