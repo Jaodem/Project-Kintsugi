@@ -1,0 +1,28 @@
+# Project Kintsugi — Notification Policy
+
+font=JetBrainsMono Nerd Font 10
+
+background-color=#1A1A1A
+text-color=#F0F0F0
+
+border-size=2
+border-color=#780606
+border-radius=10
+
+padding=10
+margin=10
+
+progress-color=over #780606
+
+[urgency=low]
+default-timeout=3000
+ignore-timeout=1
+
+[urgency=normal]
+default-timeout=5000
+ignore-timeout=1
+
+[urgency=critical]
+default-timeout=0
+ignore-timeout=1
+border-color=#DA4453

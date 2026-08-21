@@ -1,0 +1,6 @@
+[Unit]
+Description=Kintsugi Update Notification Service
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/hypr/scripts/check-updates.sh

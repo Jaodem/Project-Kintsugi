@@ -1,0 +1,87 @@
+/* =========================================
+ * WAYBAR — Base
+ * ========================================= */
+
+/* Full bar */
+window#waybar {
+    background: transparent;
+    color: #ffffff;
+
+    font-family: "JetBrainsMono Nerd Font", "Noto Sans", sans-serif;
+    font-size: 14px;
+}
+
+/* All modules */
+#workspaces,
+#window,
+#clock,
+#network,
+#wireplumber,
+#bluetooth,
+#language,
+#custom-cpu,
+#custom-memory,
+#battery,
+#custom-weather,
+#tray {
+background: rgba(30, 30, 30, 0.90);
+margin: 2px 1px;
+padding: 1px 7px;
+border-radius: 8px;
+}
+
+/* Clock */
+#clock {
+font-weight: bold;
+}
+
+/* Network states */
+#network.disconnected,
+#network.disabled {
+opacity: 0.55;
+}
+
+/* Bluetooth states */
+#bluetooth.off,
+#bluetooth.disabled {
+opacity: 0.55;
+}
+
+/* Audio muted state */
+#wireplumber.muted {
+opacity: 0.65;
+}
+
+/* Battery states */
+#battery.charging,
+#battery.plugged {
+color: #a6e3a1;
+}
+
+#battery.warning:not(.charging) {
+color: #f9e2af;
+}
+
+#battery.critical:not(.charging) {
+color: #f38ba8;
+animation: blink 0.5s linear infinite alternate;
+}
+
+@keyframes blink {
+    to {
+        background-color: rgba(243, 139, 168, 0.5);
+    }
+}
+
+/* Tooltips */
+tooltip {
+    background: #292c30;
+    color: #fcfcfc;
+    border: 1px solid #780606;
+    border-radius: 8px;
+    padding: 6px 9px;
+}
+
+tooltip label {
+    color: #fcfcfc;
+}
