@@ -669,20 +669,70 @@ Additional optimization tasks not covered by the update subphases. Automated pos
 
 ## Phase 6 — Reproducibility
 
-Make the environment easier to reproduce, restore, and maintain.
-
-Potential areas include:
-
-* [ ] Organize dotfiles
-* [ ] Improve installation documentation
-* [ ] Define a reproducible installation procedure
-* [ ] Define a backup strategy
-* [ ] Review repository structure
-* [ ] Evaluate preparation for a public repository
+Make the environment easier to reproduce, restore, and maintain using professional software engineering practices.
 
 Reproducibility should be developed from the configuration and decisions that have already been validated rather than from an assumed target configuration.
 
-**Status:** Pending evaluation.
+---
+
+### 6.1 — Configuration Management (Dotfiles)
+
+* [ ] Evaluate symlink deployment strategies (e.g., GNU Stow)
+* [ ] Migrate validated configurations to the repository's `dotfiles/` directory
+* [ ] Sanitize configurations (remove hardcoded paths, personal tokens, or local environmental specifics)
+
+**Status:** Pending.
+
+This subphase focuses on extracting live system configurations into a version-controlled, safely deployable structure.
+
+---
+
+### 6.2 — Dependency Tracking
+
+* [ ] Generate a definitive Bill of Materials (BOM) for system packages (DNF5)
+* [ ] Generate a BOM for user applications (Flatpak)
+* [ ] Document external dependencies (custom fonts, themes, manual binaries)
+
+**Status:** Pending.
+
+To reproduce the system, the exact required packages must be known and separated from transient or orphaned dependencies.
+
+---
+
+### 6.3 — Automated Installation Procedure
+
+* [ ] Design a modular installation script (`bootstrap.sh` or `install.sh`)
+* [ ] Automate package installation using the established BOMs
+* [ ] Automate dotfile deployment using the chosen management strategy
+* [ ] Document the step-by-step reproduction procedure from a fresh Fedora KDE installation
+
+**Status:** Pending.
+
+This subphase converts the manual validation work of Phases 1 to 5 into repeatable, executable code.
+
+---
+
+### 6.4 — Backup and Disaster Recovery
+
+* [ ] Define backup scope for critical development data and local databases
+* [ ] Evaluate local recovery mechanisms (e.g., BTRFS snapshots)
+* [ ] Evaluate backup tools for personal and academic files
+
+**Status:** Pending.
+
+While configuration lives in Git, personal data and active projects require a distinct, reliable backup strategy.
+
+---
+
+### 6.5 — Public Release Preparation
+
+* [ ] Refine the repository structure for third-party readability
+* [ ] Draft a comprehensive `README.md` including visual documentation
+* [ ] Select an appropriate open-source license
+
+**Status:** Pending.
+
+Preparation of the repository to serve as a public portfolio piece or community resource.
 
 ---
 
