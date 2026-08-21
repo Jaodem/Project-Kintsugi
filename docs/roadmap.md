@@ -677,11 +677,11 @@ Reproducibility should be developed from the configuration and decisions that ha
 
 ### 6.1 — Configuration Management (Dotfiles)
 
-* [ ] Evaluate symlink deployment strategies (e.g., GNU Stow)
-* [ ] Migrate validated configurations to the repository's `dotfiles/` directory
-* [ ] Sanitize configurations (remove hardcoded paths, personal tokens, or local environmental specifics)
+* [x] Evaluate symlink deployment strategies (e.g., GNU Stow)
+* [x] Migrate validated configurations to the repository's `dotfiles/` directory
+* [x] Sanitize configurations (remove hardcoded paths, personal tokens, or local environmental specifics)
 
-**Status:** Pending.
+**Status:** Completed.
 
 This subphase focuses on extracting live system configurations into a version-controlled, safely deployable structure.
 
