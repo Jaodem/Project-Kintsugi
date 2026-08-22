@@ -2,7 +2,8 @@
 
 > A personal journey to build a minimalist, reproducible, and fully understood Linux desktop.
 
-![Project Kintsugi Showcase](docs/assets/showcase.png)
+![Project Kintsugi Showcase - Clean](docs/assets/showcase.png)
+![Project Kintsugi Showcase - Apps & Theme](docs/assets/showcase-apps.png)
 
 ## Why Project Kintsugi Exists
 
