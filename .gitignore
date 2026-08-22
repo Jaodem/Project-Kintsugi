@@ -1,0 +1,35 @@
+# ==============================================================================
+# Project Kintsugi - Git Ignore Rules
+# ==============================================================================
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup and temp files
+*~
+*.bak
+*.swp
+*.tmp
+*.log
+
+# Sensitive information (Never commit these!)
+.env
+*.pem
+*.key
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+known_hosts
+
+# Local history / bash data
+.bash_history
+.zsh_history
+.python_history
+.mysql_history
