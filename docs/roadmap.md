@@ -726,11 +726,11 @@ While configuration lives in Git, personal data and active projects require a di
 
 ### 6.5 — Public Release Preparation
 
-* [ ] Refine the repository structure for third-party readability
-* [ ] Draft a comprehensive `README.md` including visual documentation
-* [ ] Select an appropriate open-source license
+* [x] Refine the repository structure for third-party readability
+* [x] Draft a comprehensive `README.md` including visual documentation
+* [x] Select an appropriate open-source license
 
-**Status:** Pending.
+**Status:** Completed.
 
 Preparation of the repository to serve as a public portfolio piece or community resource.
 
