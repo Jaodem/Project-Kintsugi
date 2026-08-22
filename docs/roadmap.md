@@ -701,14 +701,14 @@ To reproduce the system, the exact required packages must be known and separated
 
 ### 6.3 — Automated Installation Procedure
 
-* [ ] Design a modular installation script (`bootstrap.sh` or `install.sh`)
-* [ ] Automate package installation using the established BOMs
-* [ ] Automate dotfile deployment using the chosen management strategy
-* [ ] Document the step-by-step reproduction procedure from a fresh Fedora KDE installation
+* [x] Design a modular installation script (`bootstrap.sh` or `install.sh`)
+* [x] Automate package installation using the established BOMs
+* [x] Automate dotfile deployment using the chosen management strategy
+* [x] Document the step-by-step reproduction procedure from a fresh Fedora KDE installation
 
-**Status:** Pending.
+**Status:** Completed.
 
-This subphase converts the manual validation work of Phases 1 to 5 into repeatable, executable code.
+The full reproduction procedure is now codified in `scripts/bootstrap.sh` and operationally documented in `docs/implementation/25-automated-bootstrap.md`.
 
 ---
 
