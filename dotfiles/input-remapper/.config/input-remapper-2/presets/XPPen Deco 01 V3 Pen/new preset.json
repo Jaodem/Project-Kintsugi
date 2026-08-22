@@ -1,0 +1,12 @@
+[
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 48,
+                "origin_hash": "1f9569853f9ec83ac5b6574ea67d01de"
+            }
+        ],
+        "target_uinput": "keyboard"
+    }
+]
