@@ -10,6 +10,11 @@ This BOM explicitly excludes base operating system packages (e.g., kernel, glibc
 
 These packages form the core Wayland desktop environment and its supporting services.
 
+### Third-Party Repositories (COPR)
+
+* `lionheartp/Hyprland` - External repository for the Hyprland compositor
+* `varlad/yazi` - External repository for the Yazi terminal file manager
+
 ### Compositor & Session
 
 * `hyprland` - Core Wayland compositor
@@ -50,6 +55,7 @@ These packages form the core Wayland desktop environment and its supporting serv
 * `fastfetch` - System information display
 * `yazi` - Terminal file manager
 * `rclone` - Command-line cloud synchronization tool
+* `input-remapper` - Daemon and GUI to map keyboard buttons
 
 ## 2. User Applications (Flatpak)
 

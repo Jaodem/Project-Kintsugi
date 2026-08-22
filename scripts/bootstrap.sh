@@ -23,6 +23,17 @@ log_err() { printf "${C_ERR}[ERROR]${C_NONE} %s\n" "$1" >&2; }
 # Modules
 # ==============================================================================
 
+enable_repositories() {
+    log_info "Enabling third-party COPR repositories..."
+    
+    # Enable COPR plugin for DNF5
+    sudo dnf5 install -y dnf5-command-copr
+    
+    # Enable required external repositories for desktop and file management
+    sudo dnf5 copr enable -y lionheartp/Hyprland
+    sudo dnf5 copr enable -y varlad/yazi
+}
+
 install_dnf_packages() {
     log_info "Installing base system packages via DNF5..."
     
@@ -41,7 +52,7 @@ install_dnf_packages() {
         brave-browser kwrite okular mpv
         
         # System Utilities & Monitoring
-        stow btop fastfetch yazi rclone
+        stow btop fastfetch yazi rclone input-remapper
     )
 
     log_info "Updating system repositories..."
@@ -116,6 +127,7 @@ main() {
     log_info "Starting Project Kintsugi automated bootstrap..."
 
     # Modules
+    enable_repositories
     install_dnf_packages
     install_flatpak_apps
     install_external_dependencies
