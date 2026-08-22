@@ -33,7 +33,7 @@ hl.bind(mainMod .. " + J",          hl.dsp.layout("togglesplit"))
 
 -- Screenshots (Grimblast)
 hl.bind("Print",         hl.dsp.exec_cmd("grimblast copy area"))
-hl.bind("SHIFT + Print", hl.dsp.exec_cmd("mkdir -p ~/Pictures/Screenshots && grimblast -n save area ~/Pictures/Screenshots/Screenshot-$(date +'%Y-%m-%d_%H-%M-%S').png"))
+hl.bind("SHIFT + Print", hl.dsp.exec_cmd("sh -c 'mkdir -p ~/Pictures/Screenshots && grimblast -n save area ~/Pictures/Screenshots/Screenshot-$(date +\"%Y-%m-%d_%H-%M-%S\").png'"))
 hl.bind("CTRL + Print",  hl.dsp.exec_cmd("grimblast copy screen"))
 
 -- Focus Movement (Super + Arrows)
