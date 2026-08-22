@@ -49,6 +49,7 @@ These packages form the core Wayland desktop environment and its supporting serv
 * `btop` / `htop` - Interactive process viewers
 * `fastfetch` - System information display
 * `yazi` - Terminal file manager
+* `rclone` - Command-line cloud synchronization tool
 
 ## 2. User Applications (Flatpak)
 

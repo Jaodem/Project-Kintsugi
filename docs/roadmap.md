@@ -714,11 +714,11 @@ The full reproduction procedure is now codified in `scripts/bootstrap.sh` and op
 
 ### 6.4 — Backup and Disaster Recovery
 
-* [ ] Define backup scope for critical development data and local databases
-* [ ] Evaluate local recovery mechanisms (e.g., BTRFS snapshots)
-* [ ] Evaluate backup tools for personal and academic files
+* [x] Define backup scope for critical development data and local databases
+* [x] Evaluate local recovery mechanisms (e.g., BTRFS snapshots)
+* [x] Evaluate backup tools for personal and academic files
 
-**Status:** Pending.
+**Status:** Completed.
 
 While configuration lives in Git, personal data and active projects require a distinct, reliable backup strategy.
 

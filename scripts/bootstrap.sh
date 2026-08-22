@@ -41,7 +41,7 @@ install_dnf_packages() {
         brave-browser kwrite okular mpv
         
         # System Utilities & Monitoring
-        stow btop fastfetch yazi
+        stow btop fastfetch yazi rclone
     )
 
     log_info "Updating system repositories..."
