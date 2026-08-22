@@ -47,6 +47,7 @@ These packages form the core Wayland desktop environment and its supporting serv
 * `kwrite` - Lightweight text editor
 * `okular` - Document and PDF viewer
 * `mpv` - Minimalist media player
+* `keepassxc` - Offline password manager and Secret Service provider
 
 ### System Utilities & Monitoring
 

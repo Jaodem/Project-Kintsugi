@@ -49,7 +49,7 @@ install_dnf_packages() {
         kitty dolphin grimblast cliphist brightnessctl playerctl
         
         # Daily Applications
-        brave-browser kwrite okular mpv
+        brave-browser kwrite okular mpv keepassxc
         
         # System Utilities & Monitoring
         stow btop fastfetch yazi rclone input-remapper
