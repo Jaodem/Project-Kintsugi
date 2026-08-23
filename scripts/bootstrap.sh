@@ -93,6 +93,26 @@ install_external_dependencies() {
     fi
 }
 
+configure_wayland_session() {
+    log_info "Configuring custom Wayland session for Hyprland..."
+    
+    local session_file="/usr/share/wayland-sessions/hyprland-kintsugi.desktop"
+    
+    # Create the custom Kintsugi session
+    cat <<EOF | sudo tee "$session_file" > /dev/null
+[Desktop Entry]
+Name=Hyprland (Project Kintsugi)
+Comment=Hyprland via UWSM using the official start-hyprland wrapper
+Exec=/usr/bin/uwsm start -F /usr/bin/start-hyprland
+Type=Application
+DesktopNames=Hyprland
+EOF
+
+    # Remove the problematic default sessions silently if they exist
+    sudo rm -f /usr/share/wayland-sessions/hyprland-uwsm.desktop
+    sudo rm -f /usr/share/wayland-sessions/hyprland.desktop
+}
+
 deploy_dotfiles() {
     log_info "Deploying configurations using GNU Stow..."
     
@@ -131,6 +151,7 @@ main() {
     install_dnf_packages
     install_flatpak_apps
     install_external_dependencies
+    configure_wayland_session
     deploy_dotfiles
 
     log_info "Bootstrap completed successfully."
