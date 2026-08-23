@@ -37,7 +37,6 @@ enable_repositories() {
 install_dnf_packages() {
     log_info "Installing base system packages via DNF5..."
     
-    # Core packages defined in the BOM (Phase 6.2)
     local core_packages=(
         # Compositor & Session
         hyprland hypridle hyprlock sddm sddm-wayland-plasma polkit-kde
@@ -55,11 +54,16 @@ install_dnf_packages() {
         stow btop fastfetch yazi rclone input-remapper
     )
 
+    local dev_packages=(
+        # Development Tools & Containers
+        git docker docker-compose python3 gcc-c++ make kubernetes-client
+    )
+
     log_info "Updating system repositories..."
     sudo dnf5 upgrade -y
 
-    log_info "Installing core packages..."
-    sudo dnf5 install -y "${core_packages[@]}"
+    log_info "Installing core and dev packages..."
+    sudo dnf5 install -y "${core_packages[@]}" "${dev_packages[@]}"
 }
 
 install_flatpak_apps() {
@@ -84,6 +88,15 @@ install_external_dependencies() {
         curl -f https://zed.dev/install.sh | sh
     else
         log_info "Zed Editor is already installed. Skipping."
+    fi
+
+    # fnm (Fast Node Manager)
+    if ! command -v fnm >/dev/null 2>&1; then
+        log_info "Installing fnm (Fast Node Manager)..."
+        curl -fsSL https://fnm.vercel.app/install | bash -s -- --skip-shell
+        log_info "Notice: Add 'eval \"\$(fnm env --use-on-cd)\"' to your .bashrc manually."
+    else
+        log_info "fnm is already installed. Skipping."
     fi
 
     # Nerd Fonts
@@ -111,6 +124,19 @@ EOF
     # Remove the problematic default sessions silently if they exist
     sudo rm -f /usr/share/wayland-sessions/hyprland-uwsm.desktop
     sudo rm -f /usr/share/wayland-sessions/hyprland.desktop
+}
+
+configure_docker() {
+    log_info "Configuring Docker daemon and permissions..."
+    
+    # Enable and start Docker service
+    sudo systemctl enable --now docker.service
+    
+    # Add current user to the docker group if not already added
+    if ! groups "$USER" | grep -q "\bdocker\b"; then
+        sudo usermod -aG docker "$USER"
+        log_info "User added to docker group (requires a logout/login to take full effect)."
+    fi
 }
 
 deploy_dotfiles() {
@@ -152,6 +178,7 @@ main() {
     install_flatpak_apps
     install_external_dependencies
     configure_wayland_session
+    configure_docker
     deploy_dotfiles
 
     log_info "Bootstrap completed successfully."

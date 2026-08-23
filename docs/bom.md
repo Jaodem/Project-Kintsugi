@@ -49,6 +49,16 @@ These packages form the core Wayland desktop environment and its supporting serv
 * `mpv` - Minimalist media player
 * `keepassxc` - Offline password manager and Secret Service provider
 
+### Development Tools & Containers
+
+* `git` - Version control system
+* `docker` - Container platform and runtime
+* `docker-compose` - Multi-container orchestration tool
+* `kubernetes-client` - Kubernetes command-line tool (kubectl)
+* `python3` - Python runtime environment
+* `gcc-c++` - GNU C++ compiler
+* `make` - Build automation tool
+
 ### System Utilities & Monitoring
 
 * `stow` - Symlink configuration manager
@@ -73,6 +83,7 @@ Assets and binaries installed outside the standard package managers.
 * `whatscli` - Terminal-based WhatsApp client
 * `zed` - High-performance code editor
 * `ytm-player` - Terminal-based YouTube Music player
+* `fnm` - Fast Node Manager (Rust-based Node.js version manager)
 
 ### Typography
 
