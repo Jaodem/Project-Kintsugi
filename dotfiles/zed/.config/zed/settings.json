@@ -7,6 +7,23 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "agent_servers": {
+    "github-copilot-cli": {
+      "default_config_options": {
+        "mode": "https://agentclientprotocol.com/protocol/session-modes#agent",
+        "allow_all": "on"
+      },
+      "type": "registry"
+    }
+  },
+  "edit_predictions": {
+    "mode": "eager",
+    "provider": "copilot"
+  },
+  "disable_ai": false,
+  "features": {
+    "copilot": true
+  },
   "project_panel": {
     "dock": "left"
   },
@@ -17,6 +34,7 @@
     "dock": "left"
   },
   "agent": {
+    "terminal_init_command": "",
     "dock": "right",
     "favorite_models": [],
     "model_parameters": []
@@ -46,7 +64,7 @@
   "theme": {
     "mode": "system",
     "light": "Gruvbox Light",
-    "dark": "Gruvbox Dark",
+    "dark": "Gruvbox Dark"
   },
   "ui_font_family": "Ubuntu",
   "buffer_font_family": "JetBrains Mono",
@@ -54,5 +72,5 @@
   "terminal": {
     "font_family": "JetBrains Mono",
     "font_fallbacks": []
-  },
+  }
 }
