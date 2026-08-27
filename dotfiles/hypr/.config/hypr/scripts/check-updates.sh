@@ -18,8 +18,8 @@ FUZZEL_ARGS=(
 
 # ---------- Data Gathering ----------
 
-SEC_UPDATES=$(dnf5 check-upgrade --security -C --quiet | grep -E '\.(x86_64|noarch|i686|aarch64)' | wc -l)
-ALL_DNF_UPDATES=$(dnf5 check-upgrade -C --quiet | grep -E '\.(x86_64|noarch|i686|aarch64)' | wc -l)
+SEC_UPDATES=$(dnf5 check-upgrade --security --refresh --quiet 2>/dev/null | grep -E '\.(x86_64|noarch|i686|aarch64)' | wc -l)
+ALL_DNF_UPDATES=$(dnf5 check-upgrade --refresh --quiet 2>/dev/null | grep -E '\.(x86_64|noarch|i686|aarch64)' | wc -l)
 STD_UPDATES=$((ALL_DNF_UPDATES - SEC_UPDATES))
 FLATPAK_UPDATES=$(flatpak remote-ls --updates | wc -l)
 
@@ -62,7 +62,7 @@ if [ "$ACTION" = "default" ]; then
     
     DETAILS+="=== SECURITY ADVISORIES ===\n"
     if [ "$SEC_UPDATES" -gt 0 ]; then
-        DETAILS+=$(dnf5 updateinfo list -C --quiet)
+        DETAILS+=$(dnf5 updateinfo list --refresh --quiet 2>/dev/null)
     else
         DETAILS+="No pending security patches."
     fi
@@ -70,7 +70,7 @@ if [ "$ACTION" = "default" ]; then
 
     DETAILS+="=== ALL PENDING PACKAGES ===\n"
     if [ "$ALL_DNF_UPDATES" -gt 0 ]; then
-        DETAILS+=$(dnf5 check-upgrade -C --quiet | awk '/^Upgrades / {next} NF {print}')
+        DETAILS+=$(dnf5 check-upgrade --refresh --quiet 2>/dev/null | awk '/^Upgrades / {next} NF {print}')
     else
         DETAILS+="No pending system packages."
     fi

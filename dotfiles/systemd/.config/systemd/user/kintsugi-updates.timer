@@ -3,7 +3,7 @@ Description=Kintsugi Update Notification Timer
 
 [Timer]
 # Execute 10 minutes after session startup
-OnBootSec=10min
+OnBootSec=3min
 # Execute again every 24 hours
 OnUnitActiveSec=24h
 
