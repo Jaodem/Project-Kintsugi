@@ -15,6 +15,7 @@ hl.bind("mouse:274", hl.dsp.exec_cmd("true"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd(terminal))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + K", hl.dsp.exec_cmd("kwrite"))
 hl.bind(mainMod .. " + period", hl.dsp.exec_cmd("~/.config/hypr/scripts/emoji-selector.sh"))
 
 -- Session & Menus

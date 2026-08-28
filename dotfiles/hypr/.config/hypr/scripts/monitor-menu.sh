@@ -5,7 +5,7 @@ set -u
 FUZZEL_ARGS=(
     --dmenu
     --width 32
-    --lines 4
+    --lines 5
     --minimal-lines
     --prompt "Monitors › "
 )
@@ -28,6 +28,12 @@ apply_monitors() {
 
     local external_position="$4"
     local external_disabled="$5"
+    local external_mirror="${6:-}" # Parámetro opcional para Mirror
+
+    local mirror_config=""
+    if [ -n "$external_mirror" ]; then
+        mirror_config="mirror = \"$external_mirror\","
+    fi
 
     hyprctl eval "hl.monitor({
         output = \"eDP-1\",
@@ -43,18 +49,23 @@ apply_monitors() {
         position = \"$external_position\",
         scale = 1,
         disabled = $external_disabled,
+        $mirror_config
     })"
 }
 
 # ---------- Menu ----------
 
-options=$'Extend — Notebook + monitor\nNotebook only\nMonitor only\nRestore current configuration'
+options=$'Extend — Notebook + monitor\nDuplicate — Mirror\nNotebook only\nMonitor only\nRestore current configuration'
 
 choice="$(printf '%s\n' "$options" | fuzzel "${FUZZEL_ARGS[@]}")"
 
 case "$choice" in
     "Extend — Notebook + monitor")
         apply_monitors 1.25 "0x0" false "1536x0" false
+        ;;
+
+    "Duplicate — Mirror")
+        apply_monitors 1.25 "0x0" false "auto" false "eDP-1"
         ;;
 
     "Notebook only")
