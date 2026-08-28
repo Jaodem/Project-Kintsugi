@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 -- Project Kintsugi — Environment Variables
 -- Responsability: System cursors, toolkit themes, and Wayland hints
 

@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 -- Project Kintsugi — Monitor Configuration
 -- Responsability: Display layout, scaling, and positioning
 

@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 -- Project Kintsugi — Appearance Configuration
 -- Responsability: Layouts, decorations, gaps, borders, curves, and animations
 

@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 -- Project Kintsugi — Window & Layer Rules
 -- Responsability: Application positioning, floating exceptions, and layer behaviors
 

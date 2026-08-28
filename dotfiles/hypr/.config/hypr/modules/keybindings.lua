@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 -- Project Kintsugi — Keybindings & Input Controls
 -- Responsability: Global keyboard shortcuts, window actions, mouse binds, and media controls
 

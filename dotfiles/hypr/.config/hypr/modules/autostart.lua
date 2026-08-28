@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 -- Project Kintsugi — Autostart Configuration
 -- Responsability: Core session daemons and startup scripts
 

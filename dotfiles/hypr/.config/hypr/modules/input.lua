@@ -1,3 +1,5 @@
+---@diagnostic disable: undefined-global
+
 -- Project Kintsugi — Input Configuration
 -- Responsability: Keyboard layouts, mouse behavior, gestures, and per-device setups
 
