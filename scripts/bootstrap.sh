@@ -7,17 +7,23 @@
 # Fail fast: exit on error, undefined variables, or pipe failures
 set -euo pipefail
 
-# Color definitions for logging
-readonly C_INFO='\033[0;32m' # Green
-readonly C_ERR='\033[0;31m'  # Red
-readonly C_NONE='\033[0m'    # Reset
+# Color definitions for logging (only when stdout is a terminal)
+if [[ -t 1 ]]; then
+    readonly C_INFO=$'\033[0;32m'   # Green
+    readonly C_ERR=$'\033[0;31m'    # Red
+    readonly C_NONE=$'\033[0m'      # Reset
+else
+    readonly C_INFO=''
+    readonly C_ERR=''
+    readonly C_NONE=''
+fi
 
 # Calculate absolute path to the project root
 readonly PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 
 # Logging utilities
 log_info() { printf "${C_INFO}[INFO]${C_NONE} %s\n" "$1"; }
-log_err() { printf "${C_ERR}[ERROR]${C_NONE} %s\n" "$1" >&2; }
+log_err()  { printf "${C_ERR}[ERROR]${C_NONE} %s\n" "$1" >&2; }
 
 # ==============================================================================
 # Modules
@@ -25,9 +31,6 @@ log_err() { printf "${C_ERR}[ERROR]${C_NONE} %s\n" "$1" >&2; }
 
 enable_repositories() {
     log_info "Enabling third-party COPR repositories..."
-    
-    # Enable COPR plugin for DNF5
-    sudo dnf5 install -y dnf5-command-copr
     
     # Enable required external repositories for desktop and file management
     sudo dnf5 copr enable -y lionheartp/Hyprland
